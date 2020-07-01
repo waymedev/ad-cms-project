@@ -1,0 +1,7 @@
+#gin
+[server]
+    port=
+    mode=
+
+[jwt]
+    key=
