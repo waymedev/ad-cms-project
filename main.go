@@ -25,18 +25,19 @@ func main() {
 	}
 
 	// get mode
-	mode := initStep.GetString("server.mode")
-	if mode == "release" {
+	if initStep.Mode == "release" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	// get port
-	port := initStep.GetString("server.port")
+	port := initStep.Port
 
 	if port == "" {
 		port = "9998"
 		clog.Warning("Default port is: ", port)
 	}
+
+	initStep.InitGorm()
 
 	initStep.InitGin(port)
 

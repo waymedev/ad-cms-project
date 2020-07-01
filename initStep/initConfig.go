@@ -9,6 +9,12 @@ import (
 	"strings"
 )
 
+var (
+	Appkey string
+	Port   string
+	Mode   string
+)
+
 func InitConfig(filename string) error {
 
 	clog.Info("filename: ", filename)
@@ -20,7 +26,22 @@ func InitConfig(filename string) error {
 	if err != nil {
 		return err
 	}
+
+	initGlobal()
+
 	return nil
+}
+
+func initGlobal() {
+	Appkey = GetString("jwt.appKey")
+	Port = GetString("server.port")
+	Mode = GetString("server.mode")
+
+	clog.Info(
+		"Appkey: ", Appkey,
+		"Port: ", Port,
+		"Mode: ", Mode,
+	)
 }
 
 func GetString(key string) string {
