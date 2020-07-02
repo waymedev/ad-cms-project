@@ -2,7 +2,9 @@ package main
 
 import (
 	clog "cwm.wiki/ad-CMS/common/log"
-	"cwm.wiki/ad-CMS/initStep"
+	"cwm.wiki/ad-CMS/controller"
+	"cwm.wiki/ad-CMS/initStep/global"
+	"cwm.wiki/ad-CMS/model"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -18,27 +20,27 @@ func main() {
 	// load config file
 	flag.Parse()
 	// load configuration file./
-	err := initStep.InitConfig(*configFile)
+	err := global.InitConfig(*configFile)
 	if err != nil {
 		fmt.Println("configuration load failed.")
 		os.Exit(1)
 	}
 
 	// get mode
-	if initStep.Mode == "release" {
+	if global.Mode == "release" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	// get port
-	port := initStep.Port
+	port := global.Port
 
 	if port == "" {
 		port = "9998"
 		clog.Warning("Default port is: ", port)
 	}
 
-	initStep.InitGorm()
+	model.InitGorm()
 
-	initStep.InitGin(port)
+	controller.InitGin(port)
 
 }
