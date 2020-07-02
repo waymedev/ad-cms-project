@@ -101,19 +101,71 @@ func GetUser(c *gin.Context) {
 
 func PatchUser(c *gin.Context) {
 
+	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
+	if err != nil {
+		clog.Error("GetUsers", err)
+		rest.Error(c, "请重新登录")
+		return
+	}
+
+	var input vo.UserInput
+	if err = c.ShouldBindJSON(&input); err != nil {
+		clog.Error(err)
+		return
+	}
+
+	rtv,err := mapper.UpdateUser(input)
+	if err !=nil {
+		clog.Error("PatchUser", err.Error())
+		rest.Error(c,err)
+		return
+	}
+
+	rest.Success(c,rtv)
+
 }
 
 func DeleteUser(c *gin.Context) {
+
+	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
+	if err != nil {
+		clog.Error("GetUsers", err)
+		rest.Error(c, "请重新登录")
+		return
+	}
+
+	err = mapper.DeleteUser(c.Param("id"))
+	if err != nil {
+		clog.Error("DeleteUser", err)
+		rest.Error(c,"删除失败")
+		return
+	}
+
+	rest.Success(c,true)
+
 }
 
 func PostUser(c *gin.Context) {
+
+	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
+	if err != nil {
+		clog.Error("GetUsers", err)
+		rest.Error(c, "请重新登录")
+		return
+	}
+
 	var input vo.UserInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		clog.Error(err)
 		return
 	}
 
+	err = mapper.InsertUser(input)
+	if err != nil {
+		clog.Error("PostUser", err)
+		rest.Error(c,err)
+	}
 
-	mapper.InsertUser(input)
-
+	rest.Success(c,true)
 }
+

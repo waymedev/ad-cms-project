@@ -10,7 +10,7 @@ func success(c *gin.Context) {
 	m := vo.UserInput{
 		Username: "admin",
 		Password: "admin",
-		Id: 123,
+		SystemId: 123,
 	}
 
 	Success(c,m)

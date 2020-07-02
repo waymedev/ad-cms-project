@@ -28,3 +28,4 @@ func TestGetUsers(t *testing.T) {
 		t.Error(err)
 	}
 }
+

@@ -8,7 +8,17 @@ import (
 
 func TestInsertUser(t *testing.T) {
 	model.InitGormWithPath("../ad.db")
-	InsertUser()
+
+	i := vo.UserInput{
+		Username: "test",
+		Password: "test",
+		Type: 0,
+	}
+
+	err := InsertUser(i)
+	if err != nil {
+		t.Error(err)
+	}
 }
 
 func TestSelectUser(t *testing.T) {
@@ -52,5 +62,32 @@ func TestSelectUser2(t *testing.T) {
 
 	t.Log(*user)
 
+}
 
+func TestUpdateUser(t *testing.T) {
+	model.InitGormWithPath("../ad.db")
+
+	i := vo.UserInput{
+		SystemId: 2,
+		Password: "12345",
+	}
+
+	rtv, err := UpdateUser(i)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Log(rtv)
+}
+
+func TestDeleteUser(t *testing.T) {
+	model.InitGormWithPath("../ad.db")
+
+	err := DeleteUser("2")
+	if err != nil {
+		t.Error(err)
+	}
+
+	t.Log(true)
 }
