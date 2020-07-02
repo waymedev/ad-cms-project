@@ -1,4 +1,4 @@
-package initStep
+package global
 
 import (
 	clog "cwm.wiki/ad-CMS/common/log"

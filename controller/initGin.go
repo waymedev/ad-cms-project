@@ -1,4 +1,4 @@
-package initStep
+package controller
 
 import (
 	"github.com/gin-contrib/cors"
@@ -25,6 +25,16 @@ func InitGin(port string) {
 	r.Use(mwCORS)
 
 	// router
+	api := r.Group("/api")
+	{
+		api.POST("/login", LoginController)
+		api.GET("/user", GetUsers)
+		api.GET("/user/:id", GetUser)
+		api.PATCH("/user",PatchUser)
+		api.DELETE("/user/:id",DeleteUser)
+		api.POST("/user",PostUser)
+	}
+
 
 	if err := r.Run(":" + port); err != nil {
 		return

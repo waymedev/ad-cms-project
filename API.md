@@ -47,8 +47,10 @@
 {
   "code" : 0,
   "data" : {
-    "username" : "admin",
-    "type" : 1,
+    "user": {
+      "username" : "admin",
+      "type" : 1
+  },
     "token" : "ABCDEFG"
   }
 

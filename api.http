@@ -1,0 +1,41 @@
+### 获取所有用户
+GET http://localhost:9876/api/user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+### 登录
+POST http://localhost:9876/api/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+### 根据用户ID选择用户
+GET http://localhost:9876/api/user/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+### 添加用户
+POST http://localhost:9876/api/user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+Content-Type: application/json
+
+{
+  "username": "test2",
+  "password": "test2",
+  "type": 1
+}
+
+### 修改用户
+PATCH http://localhost:9876/api/user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+Content-Type: application/json
+
+{
+  "id": 3,
+  "username" :"test3"
+}
+
+### 删除用户
+DELETE http://localhost:9876/api/user/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag

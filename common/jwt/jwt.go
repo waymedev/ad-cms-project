@@ -1,17 +1,21 @@
 package jwt
 
 import (
-	"cwm.wiki/ad-CMS/initStep"
-	"cwm.wiki/ad-CMS/model"
+	"cwm.wiki/ad-CMS/initStep/global"
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"time"
 )
 
+type UserInfo struct {
+	Username string `json:"username"`
+	Type     int32  `json:"type"`
+}
+
 type UserStdClaims struct {
 	jwt.StandardClaims
-	*model.Users
+	*UserInfo
 }
 
 func (u UserStdClaims) Valid() (err error) {
@@ -24,7 +28,7 @@ func (u UserStdClaims) Valid() (err error) {
 
 }
 
-func JwtGenerateToken(user *model.Users, d time.Duration) (string, error) {
+func GenerateToken(user *UserInfo, d time.Duration) (string, error) {
 	expireTime := time.Now().Add(d)
 	stdClaims := jwt.StandardClaims{
 		ExpiresAt: expireTime.Unix(),
@@ -38,7 +42,7 @@ func JwtGenerateToken(user *model.Users, d time.Duration) (string, error) {
 
 	// 注意加密方法
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, uClaims)
-	tokenString, err := token.SignedString([]byte(initStep.Appkey))
+	tokenString, err := token.SignedString([]byte(global.Appkey))
 
 	if err != nil {
 		fmt.Println("It's error")
@@ -49,7 +53,7 @@ func JwtGenerateToken(user *model.Users, d time.Duration) (string, error) {
 
 }
 
-func JwtParseUser(tokenString string) (*model.Users, error) {
+func ParseUser(tokenString string) (*UserInfo, error) {
 
 	if tokenString == "" {
 		return nil, errors.New("no token is found in Authorization Bearer")
@@ -61,7 +65,7 @@ func JwtParseUser(tokenString string) (*model.Users, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(initStep.Appkey), nil
+		return []byte(global.Appkey), nil
 	})
 
 	if err != nil {
@@ -71,5 +75,5 @@ func JwtParseUser(tokenString string) (*model.Users, error) {
 	if err = claims.Valid(); err != nil {
 		return nil, err
 	}
-	return claims.Users, err
+	return claims.UserInfo, err
 }
