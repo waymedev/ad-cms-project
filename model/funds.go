@@ -30,7 +30,9 @@ type Funds struct {
 	//[ 1] name                                           text                 null: false  primary: false  isArray: false  auto: false  col: text            len: -1      default: []
 	Name string `gorm:"column:name;type:text;" json:"name"`
 	//[ 2] amount                                         integer              null: false  primary: false  isArray: false  auto: false  col: integer         len: -1      default: []
-	Amount int `gorm:"column:amount;type:integer;" json:"amount"`
+	Amount float64 `gorm:"column:amount;type:real;" json:"amount"`
 	//[ 3] create_time                                    integer              null: true   primary: false  isArray: false  auto: false  col: integer         len: -1      default: []
 	CreateTime int `gorm:"column:create_time;type:integer;" json:"create_time"`
+
+	OrderID int `gorm:"column:order_id;type:integer;" json:"order_id"`
 }

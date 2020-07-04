@@ -15,7 +15,7 @@ func TestInsertOrder(t *testing.T) {
 	process, _ := json.Marshal([]string{"铁皮", "木头"})
 
 	i := model.Orders{
-		CustomerName: "招商银行",
+		CustomerName: "招商银行2",
 		FileName:     "zs.jpg",
 		Department:   "铁皮部",
 		MaterialID:   string(materialId),
@@ -25,6 +25,9 @@ func TestInsertOrder(t *testing.T) {
 		DeadlineTime: int(time.Now().Unix()),
 		OrderStatus:  0,
 		AdminStatus:  0,
+		OriginAmount: 100,
+		Discount: 0.8,
+		Amount: 100*0.8,
 	}
 
 	if err := InsertOrder(i); err != nil {

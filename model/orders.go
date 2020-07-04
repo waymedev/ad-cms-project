@@ -51,7 +51,8 @@ type Orders struct {
 	//[ 9] order_status                                   integer              null: true   primary: false  isArray: false  auto: false  col: integer         len: -1      default: []
 	OrderStatus int `gorm:"column:order_status;type:integer;" json:"order_status"`
 	//[10] admin_status                                   integer              null: true   primary: false  isArray: false  auto: false  col: integer         len: -1      default: []
-	AdminStatus int `gorm:"column:admin_status;type:integer;" json:"admin_status"`
+	AdminStatus  int     `gorm:"column:admin_status;type:integer;" json:"admin_status"`
+	OriginAmount float64 `gorm:"column:origin_amount;type:real;" json:"origin_amount"`
+	Discount     float64 `gorm:"column:discount;type:real;" json:"discount"`
+	Amount       float64 `gorm:"column:amount;type:real;" json:"amount"`
 }
-
-
