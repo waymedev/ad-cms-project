@@ -28,15 +28,15 @@ JSON Sample
 // Users struct is a row record of the users table in the main database
 type Users struct {
 	//[ 0] system_id                                      integer              null: false  primary: true   isArray: false  auto: true   col: integer         len: -1      default: []
-	SystemID int32 `gorm:"primary_key;AUTO_INCREMENT;column:system_id;type:integer;" json:"system_id"`
+	SystemID int `gorm:"primary_key;AUTO_INCREMENT;column:system_id;type:integer;" json:"system_id"`
 	//[ 1] username                                       text                 null: false  primary: false  isArray: false  auto: false  col: text            len: -1      default: []
 	Username string `gorm:"column:username;type:text;" json:"username"`
 	//[ 2] password                                       text                 null: false  primary: false  isArray: false  auto: false  col: text            len: -1      default: []
 	Password string `gorm:"column:password;type:text;" json:"password"`
 	//[ 3] type                                           integer              null: false  primary: false  isArray: false  auto: false  col: integer         len: -1      default: []
-	Type int32 `gorm:"column:type;type:integer;" json:"type"`
+	Type int `gorm:"column:type;type:integer;" json:"type"`
 	//[ 4] create_time                                    integer              null: true   primary: false  isArray: false  auto: false  col: integer         len: -1      default: []
-	CreateTime int64 `gorm:"column:create_time;type:integer;" json:"create_time"`
+	CreateTime int `gorm:"column:create_time;type:integer;" json:"create_time"`
 	//[ 5] update_time                                    integer              null: true   primary: false  isArray: false  auto: false  col: integer         len: -1      default: []
-	UpdateTime int64 `gorm:"column:update_time;type:integer;" json:"update_time"`
+	UpdateTime int `gorm:"column:update_time;type:integer;" json:"update_time"`
 }

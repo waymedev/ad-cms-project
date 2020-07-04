@@ -14,8 +14,8 @@ func InsertUser(user vo.UserInput) error {
 		Username:   user.Username,
 		Password:   user.Password,
 		Type:       user.Type,
-		CreateTime: time.Now().Unix(),
-		UpdateTime: time.Now().Unix(),
+		CreateTime: int(time.Now().Unix()),
+		UpdateTime: int(time.Now().Unix()),
 	}
 
 	err := model.DB.Create(&i).Error
@@ -73,7 +73,7 @@ func UpdateUser(i vo.UserInput) (*model.Users, error) {
 	//	Type:       i.Type,
 	//	UpdateTime: time.Now().Unix(),
 	//}
-	i.UpdateTime = time.Now().Unix()
+	i.UpdateTime = int(time.Now().Unix())
 
 	if user != nil {
 		model.DB.Model(&user).Update(i)
@@ -83,7 +83,7 @@ func UpdateUser(i vo.UserInput) (*model.Users, error) {
 
 }
 
-func DeleteUser(id string) (error) {
+func DeleteUser(id string) error {
 
 	err := model.DB.Where("system_id = ?", id).Delete(model.Users{}).Error
 

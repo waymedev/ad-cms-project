@@ -4,14 +4,20 @@
 
 - [API](#api)
   - [Pre](#pre)
-  - [0. 权限管理](#0-权限管理)
-  - [1. 用户相关](#1-用户相关)
+  - [0.权限管理](#0权限管理)
+  - [1.用户相关](#1用户相关)
     - [1.1. 登录](#11-登录)
     - [1.2. 用户列表](#12-用户列表)
     - [1.3. 单个用户](#13-单个用户)
     - [1.4. 修改用户](#14-修改用户)
     - [1.5. 删除用户](#15-删除用户)
-  - [2. 订单相关](#2-订单相关)
+    - [1.6.添加用户](#16添加用户)
+  - [2.订单相关](#2订单相关)
+    - [2.1.添加订单](#21添加订单)
+    - [2.2.订单列表](#22订单列表)
+    - [2.3.单个订单列表](#23单个订单列表)
+    - [2.4.修改订单内容](#24修改订单内容)
+    - [2.5.删除订单](#25删除订单)
   - [3. 材料相关](#3-材料相关)
   - [4. 绩效相关](#4-绩效相关)
   - [5. 财务相关](#5-财务相关)
@@ -22,12 +28,12 @@
 
 鉴权采用 JWT TOKEN 除登录接口外其他接口 `Header` 需带 `Authorization` 头
 
-## 0. 权限管理
+## 0.权限管理
 
 - 管理员：1
 - 普通用户：0
 
-## 1. 用户相关
+## 1.用户相关
 
 ### 1.1. 登录
 
@@ -111,6 +117,7 @@ header:  Authorization
 - payload:
 ```json
 {
+  "system_id": 1,
   "username" : "update",
   "password" : "update",
   "type" : 1
@@ -128,7 +135,86 @@ header:  Authorization
 }
 ```
 
-## 2. 订单相关
+### 1.6.添加用户
+- POST /api/user
+- payload:
+```json
+{
+  "username": "test1",
+  "password": "test2",
+  "type": 1
+}
+```
+
+## 2.订单相关
+
+### 2.1.添加订单
+- POST /api/order
+- payload:
+  - 创建时间系统自动生成
+  - 订单状态默认未完成、未审核
+```json
+{
+  "customer_name": "招商银行",
+  "file_name": "zhaoshang.jpg",
+  "department": "铁皮部",
+  "material_id": [1,2,3],
+  "maker_id": 1,
+  "process": ["铁皮字","打孔字"],
+  "deadline_time":"2020/8/12",
+}
+
+```
+
+- return:
+```json
+{
+  "code": 0,
+  "data":
+}
+```
+
+### 2.2.订单列表
+- GET /api/order
+- return:
+```json
+
+```
+
+### 2.3.单个订单列表
+- GET /api/order/:id
+- return:
+```json
+
+```
+
+### 2.4.修改订单内容
+- PATCH /api/order
+- payload:
+```json
+{
+  "system_id": 1,
+  "customer_name": "修改后",
+  "file_name": "修改",
+  "department": "modify",
+  "material_id": [2,3,4],
+  "maker_id": 1,
+  "process": ["打孔字"],
+  "deadline_time": "2020/10/10",
+  "order_status": 1,
+  "admin_status": 1
+}
+```
+
+### 2.5.删除订单
+- DELETE /api/order/:id
+- return:
+```json
+{
+  "code": 0,
+  "data": true
+}
+```
 
 ## 3. 材料相关
 
