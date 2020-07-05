@@ -36,7 +36,6 @@ func formate(input vo.OrderInput) model.Orders {
 	return m
 }
 
-
 // 获取所有订单
 func GetOrders(c *gin.Context) {
 
@@ -172,13 +171,3 @@ func DeleteOrder(c *gin.Context) {
 	rest.Success(c,true)
 }
 
-
-func Demo(c *gin.Context) {
-	var input model.Orders
-	if err := c.ShouldBindJSON(&input); err != nil {
-		clog.Error(err)
-		return
-	}
-
-	clog.Info(input)
-}

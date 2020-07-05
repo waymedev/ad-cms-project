@@ -41,7 +41,18 @@ func InitGin(port string) {
 		api.POST("/order",PostOrder)
 		api.PATCH("/order",PatchOrder)
 
-		api.POST("/demo",Demo)
+		// 材料管理
+		api.GET("/m",GetMaterials)
+		api.GET("/m/:id",GetMaterial)
+		api.POST("/m", PostMaterial)
+		api.PATCH("/m",PatchMaterial)
+		api.DELETE("/m/:id",DeleteMaterial)
+
+		// 绩效管理
+
+		// 资金管理
+
+
 	}
 
 
