@@ -24,6 +24,17 @@ func SelectOrders() (*[]model.Orders, error) {
 	return &orders, nil
 }
 
+func SelectOrderByMakerId(id string) (*[]model.Orders,error) {
+	var orders []model.Orders
+	if err := model.DB.Where("maker_id = ?", id).Find(&orders).Error; err != nil {
+		clog.Error("SelectOrderByMakerId",err)
+		return nil,err
+	}
+
+	return &orders,nil
+
+}
+
 // 根据ID查找单个订单
 func SelectOrderById(id string) (*model.Orders, error) {
 	var order model.Orders

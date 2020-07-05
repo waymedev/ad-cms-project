@@ -83,6 +83,7 @@ func GetUser(c *gin.Context) {
 	if err != nil {
 		clog.Error(err)
 		rest.Error(c, "请重新登录")
+		return
 	}
 
 	rtv, err = mapper.SelectUser(c.Param("id"))
@@ -155,7 +156,7 @@ func PostUser(c *gin.Context) {
 	}
 
 	var input vo.UserInput
-	if err := c.ShouldBindJSON(&input); err != nil {
+	if err = c.ShouldBindJSON(&input); err != nil {
 		clog.Error(err)
 		return
 	}
@@ -164,6 +165,7 @@ func PostUser(c *gin.Context) {
 	if err != nil {
 		clog.Error("PostUser", err)
 		rest.Error(c,err)
+		return
 	}
 
 	rest.Success(c,true)

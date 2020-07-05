@@ -107,3 +107,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlh
   "discount": 0,
   "amount": 0
 }
+
+###
+GET http://localhost:9876/api/eff/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag

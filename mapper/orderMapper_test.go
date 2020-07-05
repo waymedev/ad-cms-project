@@ -87,3 +87,15 @@ func TestDeleteOrder(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestSelectOrderByMakerId(t *testing.T) {
+	model.InitGormWithPath("../ad.db")
+
+	rtv, err := SelectOrderByMakerId("1")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Log(rtv)
+}

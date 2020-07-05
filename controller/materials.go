@@ -27,6 +27,7 @@ func PostMaterial(c *gin.Context) {
 	if err = mapper.InsertMaterial(input); err!=nil {
 		clog.Error("PostMaterial", err)
 		rest.Error(c,"添加失败")
+		return
 	}
 
 	rest.Success(c,true)
@@ -48,6 +49,7 @@ func GetMaterials(c *gin.Context) {
 	if err != nil {
 		clog.Error("GetMaterials", err)
 		rest.Error(c,"查询失败")
+		return
 	}
 
 	rest.Success(c,rtv)
@@ -68,6 +70,7 @@ func GetMaterial(c *gin.Context) {
 	if err != nil {
 		clog.Error("GetMaterial",err)
 		rest.Error(c,"查询失败")
+		return
 	}
 
 	rest.Success(c,rtv)
@@ -92,6 +95,7 @@ func PatchMaterial(c *gin.Context) {
 	if err != nil {
 		clog.Error("PatchMaterial", err)
 		rest.Error(c,"修改失败")
+		return
 	}
 
 	rest.Success(c,rtv)
@@ -111,6 +115,7 @@ func DeleteMaterial(c *gin.Context) {
 	if err = mapper.DeleteMaterial(c.Param("id")); err != nil {
 		clog.Error("DeleteMaterial", err)
 		rest.Error(c,"删除失败")
+		return
 	}
 
 	rest.Success(c,true)

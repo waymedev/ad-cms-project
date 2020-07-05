@@ -49,8 +49,14 @@ func InitGin(port string) {
 		api.DELETE("/m/:id",DeleteMaterial)
 
 		// 绩效管理
+		api.GET("/eff/:id",GETEffective)
 
 		// 资金管理
+		api.GET("/fund",GetFunds)
+		api.GET("/fund/:id",GetFund)
+		api.PATCH("/fund",PatchFund)
+		api.DELETE("/fund/:id",DeleteFund)
+		api.POST("/fund",PostFund)
 
 
 	}

@@ -52,6 +52,7 @@ func GetOrders(c *gin.Context) {
 	if err != nil {
 		clog.Error("GetOrders", err)
 		rest.Error(c, "查询失败")
+		return
 	}
 
 	rest.Success(c, *rtv)
@@ -74,6 +75,7 @@ func GetOrder(c *gin.Context) {
 	if err != nil {
 		clog.Error("GetOrder", err)
 		rest.Error(c, "查询失败")
+		return
 	}
 
 	rest.Success(c, rtv)
@@ -118,6 +120,7 @@ func PostOrder(c *gin.Context) {
 	if err = mapper.InsertOrder(m); err != nil {
 		clog.Error("PostOrder",err)
 		rest.Error(c,"添加订单失败")
+		return
 	}
 
 	// TODO 与材料联动
@@ -166,6 +169,7 @@ func DeleteOrder(c *gin.Context) {
 	if err = mapper.DeleteOrder(c.Param("id")); err != nil {
 		clog.Error("",err)
 		rest.Error(c,"删除失败")
+		return
 	}
 
 	rest.Success(c,true)

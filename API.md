@@ -25,7 +25,13 @@
     - [3.4.删除材料](#34删除材料)
     - [3.5.新增材料](#35新增材料)
   - [4. 绩效相关](#4-绩效相关)
+    - [4.1.查询当前用户订单](#41查询当前用户订单)
   - [5. 财务相关](#5-财务相关)
+    - [5.1.财务列表](#51财务列表)
+    - [5.2.单个财务列表](#52单个财务列表)
+    - [5.3.更新财务](#53更新财务)
+    - [5.4.添加财务](#54添加财务)
+    - [5.5.删除财务](#55删除财务)
 
 <!-- /TOC -->
 
@@ -369,10 +375,162 @@ header:  Authorization
 
 ## 4. 绩效相关
 
+### 4.1.查询当前用户订单
+- GET /api/fund/:maker_id
+- return:
+```json
+{
+  "code": 0,
+  "data": [
+    {
+      "system_id": 3,
+      "customer_name": "招商银行",
+      "file_name": "zs.jpg",
+      "department": "铁皮部",
+      "material_id": "[1,2,3,4]",
+      "maker_id": 1,
+      "process": "[\"铁皮\",\"木头\"]",
+      "create_time": 1593840644,
+      "deadline_time": 1593840644,
+      "order_status": 0,
+      "admin_status": 0,
+      "origin_amount": 0,
+      "discount": 0,
+      "amount": 0
+    },
+    {
+      "system_id": 4,
+      "customer_name": "招商银行2",
+      "file_name": "zs.jpg",
+      "department": "铁皮部",
+      "material_id": "[1,2,3,4]",
+      "maker_id": 1,
+      "process": "[\"铁皮\",\"木头\"]",
+      "create_time": 1593853902,
+      "deadline_time": 1593853902,
+      "order_status": 0,
+      "admin_status": 0,
+      "origin_amount": 100,
+      "discount": 0.8,
+      "amount": 80
+    },
+    {
+      "system_id": 6,
+      "customer_name": "招商银行",
+      "file_name": "zs.jpg",
+      "department": "铁皮部",
+      "material_id": "[1,2,3,4,5]",
+      "maker_id": 1,
+      "process": "['木头']",
+      "create_time": 1593839927,
+      "deadline_time": 1593839927,
+      "order_status": 0,
+      "admin_status": 0,
+      "origin_amount": 100.01,
+      "discount": 0.5,
+      "amount": 50.005
+    }
+  ]
+}
+```
+
 ## 5. 财务相关
 
+### 5.1.财务列表
+- GET /api/fund
+- return:
+```json
+{
+  "code": 0,
+  "data": [
+    {
+      "system_id": 2,
+      "name": "材料进货",
+      "amount": 123.123,
+      "create_time": 1593854094,
+      "order_id": 1
+    },
+    {
+      "system_id": 3,
+      "name": "",
+      "amount": 123.123,
+      "create_time": 1593922598,
+      "order_id": 1
+    }
+  ]
+}
+```
 
+### 5.2.单个财务列表
+- GET /api/fund/:id
+- return:
+```json
+{
+  "code": 0,
+  "data": {
+    "system_id": 2,
+    "name": "材料进货",
+    "amount": 123.456,
+    "create_time": 1593854094,
+    "order_id": 1
+  }
+}
+```
 
+### 5.3.更新财务
+- PATCH /api/fund
+- payload:
+```json
+{
+  "system_id": 2,
+  "name": "材料进货",
+  "amount": 123.456,
+  "create_time": 1593854094,
+  "order_id": 1
+}
+```
+
+- return:
+```json
+{
+  "code": 0,
+  "data": {
+    "system_id": 2,
+    "name": "材料进货",
+    "amount": 123.456,
+    "create_time": 1593854094,
+    "order_id": 1
+  }
+}
+```
+
+### 5.4.添加财务
+- POST /api/fund
+- payload:
+```json
+{
+  "name": "材料进货",
+  "amount": 123.456,
+  "create_time": 1593854094
+}
+```
+- return:
+```json
+{
+  "code": 0,
+  "data": true
+}
+```
+
+### 5.5.删除财务
+- DELETE /api/fund/:id
+- return:
+```json
+{
+  "code": 0,
+  "data": true
+}
+```
 
 
 
