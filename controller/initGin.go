@@ -33,6 +33,15 @@ func InitGin(port string) {
 		api.PATCH("/user",PatchUser)
 		api.DELETE("/user/:id",DeleteUser)
 		api.POST("/user",PostUser)
+
+		// 订单管理
+		api.GET("/order",GetOrders)
+		api.GET("/order/:id",GetOrder)
+		api.DELETE("/order/:id",DeleteOrder)
+		api.POST("/order",PostOrder)
+		api.PATCH("/order",PatchOrder)
+
+		api.POST("/demo",Demo)
 	}
 
 

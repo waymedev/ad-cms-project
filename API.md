@@ -15,7 +15,7 @@
   - [2.订单相关](#2订单相关)
     - [2.1.添加订单](#21添加订单)
     - [2.2.订单列表](#22订单列表)
-    - [2.3.单个订单列表](#23单个订单列表)
+    - [2.3.单个订单](#23单个订单)
     - [2.4.修改订单内容](#24修改订单内容)
     - [2.5.删除订单](#25删除订单)
   - [3. 材料相关](#3-材料相关)
@@ -113,6 +113,7 @@ header:  Authorization
 ```
 
 ### 1.4. 修改用户
+
 - PATCH /api/user/:id
 - payload:
 ```json
@@ -125,6 +126,7 @@ header:  Authorization
 ```
 
 ### 1.5. 删除用户
+
 - DELETE /api/user/:id
 - return:
 
@@ -161,7 +163,9 @@ header:  Authorization
   "material_id": [1,2,3],
   "maker_id": 1,
   "process": ["铁皮字","打孔字"],
-  "deadline_time":"2020/8/12",
+  "deadline_time":"2020-01-02",
+  "origin_amount": 100.01,
+  "discount": 0.5
 }
 
 ```
@@ -170,7 +174,7 @@ header:  Authorization
 ```json
 {
   "code": 0,
-  "data":
+  "data": true
 }
 ```
 
@@ -178,14 +182,68 @@ header:  Authorization
 - GET /api/order
 - return:
 ```json
-
+{
+  "code": 0,
+  "data": [
+    {
+      "system_id": 2,
+      "customer_name": "招商银行",
+      "file_name": "zs.jpg",
+      "department": "铁皮部",
+      "material_id": "[1,2,3,4,5]",
+      "maker_id": 1,
+      "process": "",
+      "create_time": 1593839927,
+      "deadline_time": 1593839927,
+      "order_status": 0,
+      "admin_status": 0,
+      "origin_amount": 0,
+      "discount": 0,
+      "amount": 0
+    },
+    {
+      "system_id": 3,
+      "customer_name": "招商银行",
+      "file_name": "zs.jpg",
+      "department": "铁皮部",
+      "material_id": "[1,2,3,4]",
+      "maker_id": 1,
+      "process": "[\"铁皮\",\"木头\"]",
+      "create_time": 1593840644,
+      "deadline_time": 1593840644,
+      "order_status": 0,
+      "admin_status": 0,
+      "origin_amount": 0,
+      "discount": 0,
+      "amount": 0
+    }
+  ]
+}
 ```
 
-### 2.3.单个订单列表
+### 2.3.单个订单
 - GET /api/order/:id
 - return:
 ```json
-
+{
+  "code": 0,
+  "data": {
+    "system_id": 2,
+    "customer_name": "招商银行",
+    "file_name": "zs.jpg",
+    "department": "铁皮部",
+    "material_id": "[1,2,3,4,5]",
+    "maker_id": 1,
+    "process": "",
+    "create_time": 1593839927,
+    "deadline_time": 1593839927,
+    "order_status": 0,
+    "admin_status": 0,
+    "origin_amount": 0,
+    "discount": 0,
+    "amount": 0
+  }
+}
 ```
 
 ### 2.4.修改订单内容

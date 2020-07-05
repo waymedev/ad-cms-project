@@ -10,7 +10,7 @@ import (
 
 type UserInfo struct {
 	Username string `json:"username"`
-	Type     int32  `json:"type"`
+	Type     int  `json:"type"`
 }
 
 type UserStdClaims struct {

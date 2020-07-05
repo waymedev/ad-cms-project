@@ -39,3 +39,71 @@ Content-Type: application/json
 ### 删除用户
 DELETE http://localhost:9876/api/user/3
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+
+### 查询订单
+GET http://localhost:9876/api/order
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+### 查询单个订单
+GET http://localhost:9876/api/order/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+### 删除订单
+DELETE http://localhost:9876/api/order/5
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+### 添加订单
+POST http://localhost:9876/api/order
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+{
+  "customer_name": "招商银行",
+  "file_name": "zhaoshang.jpg",
+  "department": "铁皮部",
+  "material_id": [1,2,3],
+  "maker_id": 1,
+  "process": ["铁皮字","打孔字"],
+  "deadline_time":"2020-01-02",
+  "origin_amount": 100.01,
+  "discount": 0.5
+}
+
+###Tes
+POST http://localhost:9876/api/demo
+Content-Type: application/json
+
+{
+  "customer_name": "招商银行",
+  "file_name": "zhaoshang.jpg",
+  "department": "铁皮部",
+  "material_id": [1,2,3],
+  "maker_id": 1,
+  "process": ["铁皮字","打孔字"],
+  "deadline_time":"2020-01-02",
+  "origin_amount": 100.01,
+  "discount": 0.5
+}
+
+###
+PATCH http://localhost:9876/api/order
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+{
+  "system_id": 6,
+  "customer_name": "招商银行",
+  "file_name": "zs.jpg",
+  "department": "铁皮部",
+  "material_id": "[1,2,3,4,5]",
+  "maker_id": 1,
+  "process": "['木头']",
+  "create_time": 1593839927,
+  "deadline_time": 1593839927,
+  "order_status": 0,
+  "admin_status": 0,
+  "origin_amount": 0,
+  "discount": 0,
+  "amount": 0
+}

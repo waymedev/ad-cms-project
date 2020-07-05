@@ -10,7 +10,7 @@ func TestInsertFund(t *testing.T) {
 	model.InitGormWithPath("../ad.db")
 
 	i := model.Funds{
-		Name: "材料进货",
+		Name: "材料名称",
 		CreateTime: int(time.Now().Unix()),
 		Amount: 123.123,
 		OrderID: 1,
@@ -74,4 +74,10 @@ func TestDeleteFund(t *testing.T) {
 		t.Error(err)
 	}
 
+}
+
+func TestTime(t *testing.T) {
+
+	time,_ := time.Parse("2006-01-02", "2019-01-02")
+	t.Log(time.Unix())
 }

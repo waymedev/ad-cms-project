@@ -20,3 +20,4 @@ func Error(v ...interface{}) {
 	log.New(os.Stdout,"Error:",log.Ldate | log.Ltime | log.Lshortfile).Println(v)
 }
 
+
