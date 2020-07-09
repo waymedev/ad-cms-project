@@ -68,3 +68,33 @@ func DeleteOrder(id string) error {
 
 	return err
 }
+
+// 更新审核状态
+func UpdateAdmin(u model.Orders) (*model.Orders, error) {
+
+	var order *model.Orders
+	order, err := SelectOrderById(strconv.Itoa(u.SystemID))
+	if err != nil {
+		clog.Error("UpdateUser", err)
+		return nil, err
+	}
+
+	err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("admin_status", u.AdminStatus).Error
+
+	return order,err
+}
+
+// 更新完成状态
+func UpdateStatus(u model.Orders) (*model.Orders, error) {
+
+	var order *model.Orders
+	order, err := SelectOrderById(strconv.Itoa(u.SystemID))
+	if err != nil {
+		clog.Error("UpdateUser", err)
+		return nil, err
+	}
+
+	err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("order_status", u.OrderStatus).Error
+
+	return order,err
+}

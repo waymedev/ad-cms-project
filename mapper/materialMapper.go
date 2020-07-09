@@ -3,6 +3,7 @@ package mapper
 import (
 	clog "cwm.wiki/ad-CMS/common/log"
 	"cwm.wiki/ad-CMS/model"
+	"github.com/jinzhu/gorm"
 	"strconv"
 )
 
@@ -57,4 +58,17 @@ func DeleteMaterial(id string) error {
 	err := model.DB.Where("system_id = ?", id).Delete(model.Materials{}).Error
 
 	return err
+}
+
+
+// 自增
+func IncMaterial(ids []int) error {
+	return model.DB.Table("materials").Where("system_id IN (?)", ids).UpdateColumn("count",gorm.Expr("count + ?",1)).Error
+	//// UPDATE users SET name='hello', age=18 WHERE id IN (10, 11);
+}
+
+// 自减
+func DecMaterial(ids []int) error {
+	return model.DB.Table("materials").Where("system_id IN (?) AND count > 0", ids).UpdateColumn("count",gorm.Expr("count - ?",1)).Error
+
 }

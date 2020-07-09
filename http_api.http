@@ -93,21 +93,30 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlh
 
 {
   "system_id": 6,
-  "customer_name": "招商银行",
-  "file_name": "zs.jpg",
-  "department": "铁皮部",
-  "material_id": "[1,2,3,4,5]",
-  "maker_id": 1,
-  "process": "['木头']",
-  "create_time": 1593839927,
-  "deadline_time": 1593839927,
-  "order_status": 0,
-  "admin_status": 0,
-  "origin_amount": 0,
-  "discount": 0,
-  "amount": 0
+  "customer_name": "招商银行6"
 }
 
 ###
-GET http://localhost:9876/api/eff/1
+GET http://49.234.40.111:23334/api/eff/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+
+### 修改订单状态
+PATCH http://localhost:9876/api/order/admin
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+Content-Type: application/json
+
+{
+  "system_id": 6,
+  "admin_status": 0
+}
+
+### 修改订单完成状态
+PATCH http://localhost:9876/api/order/status
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+Content-Type: application/json
+
+{
+  "system_id": 6,
+  "order_status": 0
+}
+

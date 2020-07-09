@@ -28,6 +28,16 @@ func SelectFunds() (*[]model.Funds,error) {
 
 }
 
+func SelectFundByOrderID(id string) (*model.Funds,error) {
+	var fund model.Funds
+	if err := model.DB.Where("order_id = ?", id).First(&fund).Error; err != nil {
+		clog.Error("SelectMaterial", err)
+		return nil, err
+	}
+
+	return &fund, nil
+}
+
 // 查找单条资金记录
 func SelectFundById(id string) (*model.Funds,error) {
 	var fund model.Funds

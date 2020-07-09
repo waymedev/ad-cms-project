@@ -74,3 +74,19 @@ func TestDeleteMaterial(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestIncMaterial(t *testing.T) {
+	model.InitGormWithPath("../ad.db")
+
+	if err := IncMaterial([]int{1,4}); err!=nil {
+		t.Error(err)
+	}
+}
+
+func TestDecMaterial(t *testing.T) {
+	model.InitGormWithPath("../ad.db")
+
+	if err := DecMaterial([]int{1,4}); err!=nil {
+		t.Error(err)
+	}
+}

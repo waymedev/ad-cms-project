@@ -18,15 +18,17 @@
     - [2.3.单个订单](#23单个订单)
     - [2.4.修改订单内容](#24修改订单内容)
     - [2.5.删除订单](#25删除订单)
-  - [3. 材料相关](#3-材料相关)
+  - [3.材料相关](#3材料相关)
     - [3.1.获取所有材料列表](#31获取所有材料列表)
     - [3.2.获取单个材料](#32获取单个材料)
     - [3.3.修改材料](#33修改材料)
     - [3.4.删除材料](#34删除材料)
     - [3.5.新增材料](#35新增材料)
-  - [4. 绩效相关](#4-绩效相关)
+  - [4.绩效相关](#4绩效相关)
     - [4.1.查询当前用户订单](#41查询当前用户订单)
-  - [5. 财务相关](#5-财务相关)
+    - [4.2.订单审核](#42订单审核)
+    - [4.3. 订单完成](#43-订单完成)
+  - [5.财务相关](#5财务相关)
     - [5.1.财务列表](#51财务列表)
     - [5.2.单个财务列表](#52单个财务列表)
     - [5.3.更新财务](#53更新财务)
@@ -285,7 +287,7 @@ header:  Authorization
 }
 ```
 
-## 3. 材料相关
+## 3.材料相关
 
 ### 3.1.获取所有材料列表
 - GET /api/m
@@ -373,7 +375,7 @@ header:  Authorization
 }
 ```
 
-## 4. 绩效相关
+## 4.绩效相关
 
 ### 4.1.查询当前用户订单
 - GET /api/fund/:maker_id
@@ -434,7 +436,75 @@ header:  Authorization
 }
 ```
 
-## 5. 财务相关
+### 4.2.订单审核
+- PATCH /api/order/admin
+- payload:
+  - admin_status : 0 未审核 1 已审核
+```json
+{
+  "system_id" : 6,
+  "admin_status" : 1
+}
+```
+
+- return
+```json
+{
+  "code": 0,
+  "data": {
+    "system_id": 6,
+    "customer_name": "招商银行6",
+    "file_name": "zs.jpg",
+    "department": "铁皮部",
+    "material_id": "[1,4]",
+    "maker_id": 1,
+    "process": "['木头']",
+    "create_time": 1593839927,
+    "deadline_time": 1593839927,
+    "order_status": 0,
+    "admin_status": 0,
+    "origin_amount": 100.01,
+    "discount": 0.5,
+    "amount": 50.005
+  }
+}
+```
+
+### 4.3. 订单完成
+- PATCH /api/order/status
+- payload:
+  - order_status : 0 未完成 1 已完成
+```json
+{
+  "system_id" : 6,
+  "order_status" : 1
+}
+```
+
+- return:
+```json
+{
+  "code": 0,
+  "data": {
+    "system_id": 6,
+    "customer_name": "招商银行6",
+    "file_name": "zs.jpg",
+    "department": "铁皮部",
+    "material_id": "[1,4]",
+    "maker_id": 1,
+    "process": "['木头']",
+    "create_time": 1593839927,
+    "deadline_time": 1593839927,
+    "order_status": 1,
+    "admin_status": 0,
+    "origin_amount": 100.01,
+    "discount": 0.5,
+    "amount": 50.005
+  }
+}
+```
+
+## 5.财务相关
 
 ### 5.1.财务列表
 - GET /api/fund

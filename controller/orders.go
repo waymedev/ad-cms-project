@@ -144,7 +144,7 @@ func PatchOrder(c *gin.Context) {
 		return
 	}
 
-	//i := formate(input)
+	clog.Info("PatchOrder", input)
 
 	rtv,err := mapper.UpdateOrder(input)
 	if err !=nil {
