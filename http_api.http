@@ -11,6 +11,15 @@ Content-Type: application/json
   "password": "test2"
 }
 
+### 登录
+POST http://49.234.40.111:23334/api/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
 ### 根据用户ID选择用户
 GET http://localhost:9876/api/user/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag

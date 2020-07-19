@@ -287,6 +287,14 @@ header:  Authorization
 }
 ```
 
+
+### 2.6.导出单个订单
+- GET /api/download/:id
+- :id 为订单ID
+
+### 2.7.导出全部订单
+- GET /api/download
+
 ## 3.材料相关
 
 ### 3.1.获取所有材料列表
@@ -423,7 +431,7 @@ header:  Authorization
       "department": "铁皮部",
       "material_id": "[1,2,3,4,5]",
       "maker_id": 1,
-      "process": "['木头']",
+      "process": "[\"木头\"]",
       "create_time": 1593839927,
       "deadline_time": 1593839927,
       "order_status": 0,
@@ -492,7 +500,7 @@ header:  Authorization
     "department": "铁皮部",
     "material_id": "[1,4]",
     "maker_id": 1,
-    "process": "['木头']",
+    "process": "[\"木头\"]",
     "create_time": 1593839927,
     "deadline_time": 1593839927,
     "order_status": 1,
