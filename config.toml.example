@@ -1,7 +1,7 @@
 #gin
 [server]
     port=
-    mode=
+    mode=""
 
 [jwt]
-    key=
+    appKey=""

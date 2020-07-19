@@ -7,8 +7,8 @@ POST http://localhost:9876/api/login
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "admin"
+  "username": "test2",
+  "password": "test2"
 }
 
 ### 根据用户ID选择用户
@@ -56,7 +56,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlh
 ### 添加订单
 POST http://localhost:9876/api/order
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU3NDczNjYsImlhdCI6MTU5NTE0MjU2Niwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ZX9t09luZt5v8MsvC6fI4uZR3V5J25KeYlYknQkyXKU
 
 {
   "customer_name": "招商银行",
@@ -65,7 +65,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlh
   "material_id": [1,2,3],
   "maker_id": 1,
   "process": ["铁皮字","打孔字"],
-  "deadline_time":"2020-01-02",
+  "deadline_time":1595142814,
   "origin_amount": 100.01,
   "discount": 0.5
 }
@@ -89,11 +89,11 @@ Content-Type: application/json
 ###
 PATCH http://localhost:9876/api/order
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU3NDczNjYsImlhdCI6MTU5NTE0MjU2Niwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ZX9t09luZt5v8MsvC6fI4uZR3V5J25KeYlYknQkyXKU
 
 {
-  "system_id": 6,
-  "customer_name": "招商银行6"
+  "system_id": 3,
+  "deadline_time":1595142814
 }
 
 ###

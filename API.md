@@ -176,7 +176,7 @@ header:  Authorization
   "material_id": [1,2,3],
   "maker_id": 1,
   "process": ["铁皮字","打孔字"],
-  "deadline_time":"2020-01-02",
+  "deadline_time": 1595142814,
   "origin_amount": 100.01,
   "discount": 0.5
 }
@@ -271,7 +271,7 @@ header:  Authorization
   "material_id": [2,3,4],
   "maker_id": 1,
   "process": ["打孔字"],
-  "deadline_time": "2020/10/10",
+  "deadline_time": 1595142814,
   "order_status": 1,
   "admin_status": 1
 }

@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\Jimi\workspace\ad-cms-project\ad.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="ad" uuid="63610bb3-fc55-4928-9e90-f8f763de6246">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/ad.db</jdbc-url>
+    </data-source>
   </component>
 </project>

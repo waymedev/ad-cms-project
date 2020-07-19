@@ -8,7 +8,7 @@ type OrderInput struct {
 	MaterialID   []int    `json:"material_id"`
 	MakerID      int      `json:"maker_id"`
 	Process      []string `json:"process"`
-	DeadlineTime string   `json:"deadline_time"`
+	DeadlineTime int   `json:"deadline_time"`
 	OriginAmount float64  `json:"origin_amount"`
 	Discount     float64  `json:"discount"`
 	OrderStatus  int      `json:"order_status"`

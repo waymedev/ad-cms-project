@@ -15,7 +15,6 @@ import (
 func formate(input vo.OrderInput) model.Orders {
 	materialId,_ := json.Marshal(input.MaterialID)
 	process,_ := json.Marshal(input.Process)
-	deadline,_ := time.Parse("2006-01-02",input.DeadlineTime)
 
 	m := model.Orders{
 		SystemID: input.SystemID,
@@ -25,7 +24,7 @@ func formate(input vo.OrderInput) model.Orders {
 		MaterialID: string(materialId),
 		MakerID: input.MakerID,
 		Process: string(process),
-		DeadlineTime:int(deadline.Unix()),
+		DeadlineTime:input.DeadlineTime,
 		OriginAmount: input.OriginAmount,
 		Discount: input.Discount,
 		Amount: input.OriginAmount * input.Discount,
@@ -99,7 +98,6 @@ func PostOrder(c *gin.Context) {
 
 	materialId,_ := json.Marshal(input.MaterialID)
 	process,_ := json.Marshal(input.Process)
-	deadline,_ := time.Parse("2006-01-02",input.DeadlineTime)
 
 	m := model.Orders{
 		CustomerName: input.CustomerName,
@@ -109,7 +107,7 @@ func PostOrder(c *gin.Context) {
 		MakerID: input.MakerID,
 		Process: string(process),
 		CreateTime: int(time.Now().Unix()),
-		DeadlineTime:int(deadline.Unix()),
+		DeadlineTime:input.DeadlineTime,
 		OriginAmount: input.OriginAmount,
 		Discount: input.Discount,
 		Amount: input.OriginAmount * input.Discount,
