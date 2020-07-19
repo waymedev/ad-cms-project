@@ -26,6 +26,7 @@ func LoginController(c *gin.Context) {
 	}
 
 	userInfo := jwt.UserInfo{
+		SystemID: user.SystemID,
 		Username: user.Username,
 		Type:     user.Type,
 	}

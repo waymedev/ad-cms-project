@@ -12,7 +12,7 @@ func TestInsertUser(t *testing.T) {
 	i := vo.UserInput{
 		Username: "test",
 		Password: "test",
-		Type: 0,
+		Type:     0,
 	}
 
 	err := InsertUser(i)
@@ -52,8 +52,6 @@ func TestSelectUsers(t *testing.T) {
 func TestSelectUser2(t *testing.T) {
 	model.InitGormWithPath("../ad.db")
 
-
-
 	user, err := SelectUser("1")
 	if err != nil {
 		t.Error(err)
@@ -90,4 +88,24 @@ func TestDeleteUser(t *testing.T) {
 	}
 
 	t.Log(true)
+}
+
+func TestAli(t *testing.T) {
+
+	//i := 9
+	nums := []int{1,2,3,4}
+	var rtv []int
+
+	for index,_ := range nums {
+		sum := 0
+		for i:=0;i<=index;i++ {
+			sum += nums[i]
+		}
+
+		rtv = append(rtv,sum)
+		sum = 0
+	}
+
+	t.Log(rtv)
+
 }

@@ -9,6 +9,7 @@ import (
 )
 
 type UserInfo struct {
+	SystemID int `json:"systemId"`
 	Username string `json:"username"`
 	Type     int  `json:"type"`
 }
