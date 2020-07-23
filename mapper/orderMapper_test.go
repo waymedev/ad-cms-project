@@ -1,6 +1,7 @@
 package mapper
 
 import (
+	clog "cwm.wiki/ad-CMS/common/log"
 	"cwm.wiki/ad-CMS/model"
 	"encoding/json"
 	"testing"
@@ -37,15 +38,23 @@ func TestInsertOrder(t *testing.T) {
 }
 
 func TestSelectOrders(t *testing.T) {
-	model.InitGormWithPath("../ad.db")
+	//model.InitGormWithPath("../ad.db")
+	//
+	//var orders *[]model.Orders
+	//orders, err := SelectOrders()
+	//if err != nil {
+	//	t.Error(err)
+	//}
+	//
+	//t.Log(*orders)
 
-	var orders *[]model.Orders
-	orders, err := SelectOrders()
+	progress := []string{}
+	err := json.Unmarshal([]byte("[\"铁皮\",\"木头\"]"),&progress)
 	if err != nil {
-		t.Error(err)
+		clog.Error("unmarsh erro")
 	}
 
-	t.Log(*orders)
+	t.Log(progress)
 }
 
 func TestSelectOrderById(t *testing.T) {

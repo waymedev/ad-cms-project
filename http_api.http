@@ -51,8 +51,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlh
 
 
 ### 查询订单
-GET http://localhost:9876/api/order
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+GET http://localhost:9876/api/order/3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxMTAwNjgsImlhdCI6MTU5NTUwNTI2OCwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.0fxWvN7_V9-x3zp3NJGQxgjuBp6WqB6ygrAFsq5kFHo
 
 ### 查询单个订单
 GET http://localhost:9876/api/order/2

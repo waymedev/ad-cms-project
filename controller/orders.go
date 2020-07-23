@@ -17,23 +17,23 @@ import (
 )
 
 func formate(input vo.OrderInput) model.Orders {
-	materialId,_ := json.Marshal(input.MaterialID)
-	process,_ := json.Marshal(input.Process)
+	materialId, _ := json.Marshal(input.MaterialID)
+	process, _ := json.Marshal(input.Process)
 
 	m := model.Orders{
-		SystemID: input.SystemID,
+		SystemID:     input.SystemID,
 		CustomerName: input.CustomerName,
-		FileName: input.FileName,
-		Department: input.Department,
-		MaterialID: string(materialId),
-		MakerID: input.MakerID,
-		Process: string(process),
-		DeadlineTime:input.DeadlineTime,
+		FileName:     input.FileName,
+		Department:   input.Department,
+		MaterialID:   string(materialId),
+		MakerID:      input.MakerID,
+		Process:      string(process),
+		DeadlineTime: input.DeadlineTime,
 		OriginAmount: input.OriginAmount,
-		Discount: input.Discount,
-		Amount: input.OriginAmount * input.Discount,
-		OrderStatus: input.OrderStatus,
-		AdminStatus: input.AdminStatus,
+		Discount:     input.Discount,
+		Amount:       input.OriginAmount * input.Discount,
+		OrderStatus:  input.OrderStatus,
+		AdminStatus:  input.AdminStatus,
 	}
 
 	return m
@@ -50,21 +50,70 @@ func GetOrders(c *gin.Context) {
 		return
 	}
 
-	var rtv *[]model.Orders
-	rtv, err = mapper.SelectOrders()
+	var orderData *[]model.Orders
+	orderData, err = mapper.SelectOrders()
 	if err != nil {
 		clog.Error("GetOrders", err)
 		rest.Error(c, "查询失败")
 		return
 	}
 
-	rest.Success(c, *rtv)
+	rtv := []vo.OrderOutput{}
+	for _, v := range *orderData {
+
+		progress := []string{}
+		err := json.Unmarshal([]byte(v.Process),&progress)
+		if err != nil {
+			clog.Error("unmarsh erro")
+		}
+
+		order := vo.OrderOutput{
+			SystemID: v.SystemID,
+			CustomerName: v.CustomerName,
+			FileName: v.FileName,
+			Department: v.Department,
+			MakerID: v.MakerID,
+			Process: progress,
+			CreateTime: v.CreateTime,
+			DeadlineTime: v.DeadlineTime,
+			OrderStatus: v.OrderStatus,
+			AdminStatus: v.AdminStatus,
+			OriginAmount: v.OriginAmount,
+			Discount: v.Discount,
+			Amount: v.Amount,
+		}
+
+		materialID := []int{}
+		err = json.Unmarshal([]byte(v.MaterialID),&materialID)
+		if err != nil {
+			return
+		}
+
+		material := []vo.Material{}
+		for _,v := range materialID {
+			materialData,err := mapper.SelectMaterial(strconv.Itoa(v))
+			if err != nil {
+				return
+			}
+			m := vo.Material{
+				MaterialID: v,
+				Name: materialData.Name,
+			}
+
+			material = append(material,m)
+		}
+
+		order.Material = material
+
+		rtv = append(rtv, order)
+	}
+
+	rest.Success(c, rtv)
 
 }
 
 // 获取单个订单
 func GetOrder(c *gin.Context) {
-	var rtv *model.Orders
 
 	// 检查 token
 	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
@@ -74,14 +123,59 @@ func GetOrder(c *gin.Context) {
 		return
 	}
 
-	rtv, err = mapper.SelectOrderById(c.Param("id"))
+	orderData, err := mapper.SelectOrderById(c.Param("id"))
 	if err != nil {
 		clog.Error("GetOrder", err)
 		rest.Error(c, "查询失败")
 		return
 	}
 
-	rest.Success(c, rtv)
+
+	progress := []string{}
+	err = json.Unmarshal([]byte(orderData.Process),&progress)
+	if err != nil {
+		clog.Error("unmarsh erro")
+	}
+
+	order := vo.OrderOutput{
+		SystemID: orderData.SystemID,
+		CustomerName: orderData.CustomerName,
+		FileName: orderData.FileName,
+		Department: orderData.Department,
+		MakerID: orderData.MakerID,
+		Process: progress,
+		CreateTime: orderData.CreateTime,
+		DeadlineTime: orderData.DeadlineTime,
+		OrderStatus: orderData.OrderStatus,
+		AdminStatus: orderData.AdminStatus,
+		OriginAmount: orderData.OriginAmount,
+		Discount: orderData.Discount,
+		Amount: orderData.Amount,
+	}
+
+	materialID := []int{}
+	err = json.Unmarshal([]byte(orderData.MaterialID),&materialID)
+	if err != nil {
+		return
+	}
+
+	material := []vo.Material{}
+	for _,v := range materialID {
+		materialData,err := mapper.SelectMaterial(strconv.Itoa(v))
+		if err != nil {
+			return
+		}
+		m := vo.Material{
+			MaterialID: v,
+			Name: materialData.Name,
+		}
+
+		material = append(material,m)
+	}
+
+	order.Material = material
+
+	rest.Success(c, order)
 }
 
 // 新增订单
@@ -100,34 +194,32 @@ func PostOrder(c *gin.Context) {
 		return
 	}
 
-	materialId,_ := json.Marshal(input.MaterialID)
-	process,_ := json.Marshal(input.Process)
+	materialId, _ := json.Marshal(input.MaterialID)
+	process, _ := json.Marshal(input.Process)
 
 	m := model.Orders{
 		CustomerName: input.CustomerName,
-		FileName: input.FileName,
-		Department: input.Department,
-		MaterialID: string(materialId),
-		MakerID: input.MakerID,
-		Process: string(process),
-		CreateTime: int(time.Now().Unix()),
-		DeadlineTime:input.DeadlineTime,
+		FileName:     input.FileName,
+		Department:   input.Department,
+		MaterialID:   string(materialId),
+		MakerID:      input.MakerID,
+		Process:      string(process),
+		CreateTime:   int(time.Now().Unix()),
+		DeadlineTime: input.DeadlineTime,
 		OriginAmount: input.OriginAmount,
-		Discount: input.Discount,
-		Amount: input.OriginAmount * input.Discount,
-
+		Discount:     input.Discount,
+		Amount:       input.OriginAmount * input.Discount,
 	}
 
-
 	if err = mapper.InsertOrder(m); err != nil {
-		clog.Error("PostOrder",err)
-		rest.Error(c,"添加订单失败")
+		clog.Error("PostOrder", err)
+		rest.Error(c, "添加订单失败")
 		return
 	}
 
 	// TODO 与材料联动
 
-	rest.Success(c,true)
+	rest.Success(c, true)
 }
 
 // 修改订单 // 审核订单 // 修改订单完成状态
@@ -148,14 +240,14 @@ func PatchOrder(c *gin.Context) {
 
 	clog.Info("PatchOrder", input)
 
-	rtv,err := mapper.UpdateOrder(input)
-	if err !=nil {
+	rtv, err := mapper.UpdateOrder(input)
+	if err != nil {
 		clog.Error("PatchUser", err.Error())
-		rest.Error(c,err)
+		rest.Error(c, err)
 		return
 	}
 
-	rest.Success(c,rtv)
+	rest.Success(c, rtv)
 }
 
 // 删除订单
@@ -169,12 +261,12 @@ func DeleteOrder(c *gin.Context) {
 	}
 
 	if err = mapper.DeleteOrder(c.Param("id")); err != nil {
-		clog.Error("",err)
-		rest.Error(c,"删除失败")
+		clog.Error("", err)
+		rest.Error(c, "删除失败")
 		return
 	}
 
-	rest.Success(c,true)
+	rest.Success(c, true)
 }
 
 func GetDownloadById(c *gin.Context) {
@@ -189,7 +281,7 @@ func GetDownloadById(c *gin.Context) {
 	}
 
 	// 查询制作者用户名
-	makerName,err := mapper.SelectUser(strconv.Itoa(order.MakerID))
+	makerName, err := mapper.SelectUser(strconv.Itoa(order.MakerID))
 	if err != nil {
 		clog.Error("用户名查询错误")
 		return
@@ -199,10 +291,10 @@ func GetDownloadById(c *gin.Context) {
 	byt := []byte(order.MaterialID)
 	var material []int
 	// 修改的材料列表
-	_ = json.Unmarshal(byt,&material)
+	_ = json.Unmarshal(byt, &material)
 	var materialName string
-	for k,v := range material {
-		m,err := mapper.SelectMaterial(strconv.Itoa(v))
+	for k, v := range material {
+		m, err := mapper.SelectMaterial(strconv.Itoa(v))
 		if err != nil {
 			clog.Error("格式化错误")
 			return
@@ -219,15 +311,14 @@ func GetDownloadById(c *gin.Context) {
 	byt = []byte(order.Process)
 	var progress []string
 	var progressName string
-	_ = json.Unmarshal(byt,&progress)
+	_ = json.Unmarshal(byt, &progress)
 	for k, v := range progress {
 		if k == 0 {
 			progressName = v
-		}else  {
+		} else {
 			progressName = progressName + "," + v
 		}
 	}
-
 
 	// 格式化时间
 	tm := time.Unix(int64(order.CreateTime), 0)
@@ -235,14 +326,13 @@ func GetDownloadById(c *gin.Context) {
 	tm = time.Unix(int64(order.DeadlineTime), 0)
 	endTime := tm.Format("2006-01-02")
 
-
-	var(
-		addr string
+	var (
+		addr  string
 		sheet = "Sheet1"
 		style int
-		data = map[int][]interface{}{
+		data  = map[int][]interface{}{
 			1: {"文件内容"},
-			2:{"单号","客户名称","制作人","文件名","加工部门","材质","制作工艺","金额","下单日期","出货日期"},
+			2: {"单号", "客户名称", "制作人", "文件名", "加工部门", "材质", "制作工艺", "金额", "下单日期", "出货日期"},
 			3: {
 				order.SystemID,
 				order.CustomerName,
@@ -255,10 +345,8 @@ func GetDownloadById(c *gin.Context) {
 				createTime,
 				endTime,
 			},
-
 		}
 	)
-
 
 	for r, row := range data {
 
@@ -288,7 +376,7 @@ func GetDownloadById(c *gin.Context) {
 	if style, err = f.NewStyle(&excelize.Style{
 		Alignment: &excelize.Alignment{Horizontal: "center"},
 	}); err != nil {
-		fmt.Println("123",err)
+		fmt.Println("123", err)
 		return
 	}
 
@@ -305,11 +393,9 @@ func GetDownloadById(c *gin.Context) {
 	//回写到web 流媒体 形成下载
 	_ = f.Write(c.Writer)
 
-
-
 }
 
-func GetAllDownload(c * gin.Context) {
+func GetAllDownload(c *gin.Context) {
 
 	f := MakeFile()
 
@@ -320,13 +406,10 @@ func GetAllDownload(c * gin.Context) {
 	//回写到web 流媒体 形成下载
 	_ = f.Write(c.Writer)
 
-
 }
-
 
 func MakeFile() *excelize.File {
 	f := excelize.NewFile()
-
 
 	orders, err := mapper.SelectOrders()
 	if err != nil {
@@ -334,21 +417,20 @@ func MakeFile() *excelize.File {
 		return nil
 	}
 
-
-	var(
-		addr string
+	var (
+		addr  string
 		sheet = "Sheet1"
 		style int
-		data = map[int][]interface{}{
+		data  = map[int][]interface{}{
 			1: {"文件内容"},
-			2:{"单号","客户名称","制作人","文件名","加工部门","材质","制作工艺","金额","下单日期","出货日期"},
+			2: {"单号", "客户名称", "制作人", "文件名", "加工部门", "材质", "制作工艺", "金额", "下单日期", "出货日期"},
 		}
 	)
 
 	index := 3
-	for _,order := range *orders {
+	for _, order := range *orders {
 		// 查询制作者用户名
-		makerName,err := mapper.SelectUser(strconv.Itoa(order.MakerID))
+		makerName, err := mapper.SelectUser(strconv.Itoa(order.MakerID))
 		if err != nil {
 			clog.Error("用户名查询错误")
 			return nil
@@ -358,10 +440,10 @@ func MakeFile() *excelize.File {
 		byt := []byte(order.MaterialID)
 		var material []int
 		// 修改的材料列表
-		_ = json.Unmarshal(byt,&material)
+		_ = json.Unmarshal(byt, &material)
 		materialName := ""
-		for k,v := range material {
-			m,err := mapper.SelectMaterial(strconv.Itoa(v))
+		for k, v := range material {
+			m, err := mapper.SelectMaterial(strconv.Itoa(v))
 			if err != nil {
 				clog.Error("格式化错误")
 				return nil
@@ -378,22 +460,20 @@ func MakeFile() *excelize.File {
 		byt = []byte(order.Process)
 		var progress []string
 		progressName := ""
-		_ = json.Unmarshal(byt,&progress)
+		_ = json.Unmarshal(byt, &progress)
 		for k, v := range progress {
 			if k == 0 {
 				progressName = v
-			}else  {
+			} else {
 				progressName = progressName + "," + v
 			}
 		}
-
 
 		// 格式化时间
 		tm := time.Unix(int64(order.CreateTime), 0)
 		createTime := tm.Format("2006-01-02")
 		tm = time.Unix(int64(order.DeadlineTime), 0)
 		endTime := tm.Format("2006-01-02")
-
 
 		data[index] = []interface{}{
 			order.SystemID,
@@ -407,9 +487,8 @@ func MakeFile() *excelize.File {
 			createTime,
 			endTime,
 		}
-		index ++
+		index++
 	}
-
 
 	for r, row := range data {
 
@@ -439,7 +518,7 @@ func MakeFile() *excelize.File {
 	if style, err = f.NewStyle(&excelize.Style{
 		Alignment: &excelize.Alignment{Horizontal: "center"},
 	}); err != nil {
-		fmt.Println("123",err)
+		fmt.Println("123", err)
 		return nil
 	}
 
