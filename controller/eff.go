@@ -6,6 +6,7 @@ import (
 	"cwm.wiki/ad-CMS/common/rest"
 	"cwm.wiki/ad-CMS/mapper"
 	"cwm.wiki/ad-CMS/model"
+	"cwm.wiki/ad-CMS/model/vo"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -31,13 +32,61 @@ func GETEffective(c *gin.Context) {
 		return
 	}
 
-	rtv, err := mapper.SelectOrderByMakerId(c.Param("id"))
+	orderData, err := mapper.SelectOrderByMakerId(c.Param("id"))
 	if err != nil {
 		clog.Error("GETEffective",err)
 		rest.Error(c,"查找失败")
 		return
 	}
+	rtv := []vo.OrderOutput{}
+	for _, v := range *orderData {
 
+		progress := []string{}
+		err := json.Unmarshal([]byte(v.Process),&progress)
+		if err != nil {
+			clog.Error("unmarsh erro")
+		}
+
+		order := vo.OrderOutput{
+			SystemID: v.SystemID,
+			CustomerName: v.CustomerName,
+			FileName: v.FileName,
+			Department: v.Department,
+			MakerID: v.MakerID,
+			Process: progress,
+			CreateTime: v.CreateTime,
+			DeadlineTime: v.DeadlineTime,
+			OrderStatus: v.OrderStatus,
+			AdminStatus: v.AdminStatus,
+			OriginAmount: v.OriginAmount,
+			Discount: v.Discount,
+			Amount: v.Amount,
+		}
+
+		materialID := []int{}
+		err = json.Unmarshal([]byte(v.MaterialID),&materialID)
+		if err != nil {
+			return
+		}
+
+		material := []vo.Material{}
+		for _,v := range materialID {
+			materialData,err := mapper.SelectMaterial(strconv.Itoa(v))
+			if err != nil {
+				return
+			}
+			m := vo.Material{
+				MaterialID: v,
+				Name: materialData.Name,
+			}
+
+			material = append(material,m)
+		}
+
+		order.Material = material
+
+		rtv = append(rtv, order)
+	}
 	rest.Success(c,rtv)
 }
 
@@ -61,14 +110,14 @@ func PatchAdmin(c *gin.Context) {
 	}
 
 	// 查询订单
-	order,err := mapper.SelectOrderById(strconv.Itoa(input.SystemId))
+	Originorder,err := mapper.SelectOrderById(strconv.Itoa(input.SystemId))
 	if err != nil {
 		clog.Error("PatchAdmin",err)
 		rest.Error(c,"查找失败")
 		return
 	}
 
-	byt := []byte(order.MaterialID)
+	byt := []byte(Originorder.MaterialID)
 	var data []int
 	// 修改的材料列表
 	_ = json.Unmarshal(byt,&data)
@@ -89,15 +138,15 @@ func PatchAdmin(c *gin.Context) {
 	}
 
 	// 修改订单状态
-	rtv, err := mapper.UpdateAdmin(u)
+	orderData, err := mapper.UpdateAdmin(u)
 
-	if rtv != nil && rtv.AdminStatus == 1 {
+	if orderData != nil && orderData.AdminStatus == 1 {
 		err = mapper.DecMaterial(data)
 		if err != nil {
 			clog.Error("PatchAdmin",err)
 			return
 		}
-	}else if  rtv != nil && rtv.AdminStatus == 0 {
+	}else if  orderData != nil && orderData.AdminStatus == 0 {
 		err = mapper.IncMaterial(data)
 		if err != nil {
 			clog.Error("PatchAdmin",err)
@@ -105,7 +154,51 @@ func PatchAdmin(c *gin.Context) {
 		}
 	}
 
-	rest.Success(c,rtv)
+	progress := []string{}
+	err = json.Unmarshal([]byte(orderData.Process),&progress)
+	if err != nil {
+		clog.Error("unmarsh erro")
+	}
+
+	order := vo.OrderOutput{
+		SystemID: orderData.SystemID,
+		CustomerName: orderData.CustomerName,
+		FileName: orderData.FileName,
+		Department: orderData.Department,
+		MakerID: orderData.MakerID,
+		Process: progress,
+		CreateTime: orderData.CreateTime,
+		DeadlineTime: orderData.DeadlineTime,
+		OrderStatus: orderData.OrderStatus,
+		AdminStatus: orderData.AdminStatus,
+		OriginAmount: orderData.OriginAmount,
+		Discount: orderData.Discount,
+		Amount: orderData.Amount,
+	}
+
+	materialID := []int{}
+	err = json.Unmarshal([]byte(orderData.MaterialID),&materialID)
+	if err != nil {
+		return
+	}
+
+	material := []vo.Material{}
+	for _,v := range materialID {
+		materialData,err := mapper.SelectMaterial(strconv.Itoa(v))
+		if err != nil {
+			return
+		}
+		m := vo.Material{
+			MaterialID: v,
+			Name: materialData.Name,
+		}
+
+		material = append(material,m)
+	}
+
+	order.Material = material
+
+	rest.Success(c,order)
 
 }
 
@@ -128,15 +221,15 @@ func PatchStatus(c *gin.Context) {
 		OrderStatus: input.OrderStatus,
 	}
 
-	rtv, err := mapper.UpdateStatus(u)
+	originOrder, err := mapper.UpdateStatus(u)
 	if err != nil {
 		clog.Error("PatchStatus",err)
 		rest.Error(c,"修改失败")
 	}
 
 	// 联动资金记录
-	if rtv != nil && rtv.OrderStatus == 0 {
-		fund,err := mapper.SelectFundByOrderID(strconv.Itoa(rtv.SystemID))
+	if originOrder != nil && originOrder.OrderStatus == 0 {
+		fund,err := mapper.SelectFundByOrderID(strconv.Itoa(originOrder.SystemID))
 		if err != nil {
 			clog.Error("PatchStatus SelectFundByOrderID",err)
 			return
@@ -147,12 +240,12 @@ func PatchStatus(c *gin.Context) {
 			clog.Error("PatchStatus DeleteFund",err)
 			return
 		}
-	} else if rtv != nil && rtv.OrderStatus == 1 {
+	} else if originOrder != nil && originOrder.OrderStatus == 1 {
 		i := model.Funds{
 			Name: "订单完成",
 			CreateTime: int(time.Now().Unix()),
-			Amount: rtv.Amount,
-			OrderID: rtv.SystemID,
+			Amount: originOrder.Amount,
+			OrderID: originOrder.SystemID,
 		}
 
 		err = mapper.InsertFund(i)
@@ -162,8 +255,62 @@ func PatchStatus(c *gin.Context) {
 		}
 	}
 
+
+	rtv,err := FormatOneData(originOrder)
+	if err != nil {
+		return
+	}
+
 	rest.Success(c,rtv)
 
 
 
+}
+
+func FormatOneData( originData *model.Orders ) (*vo.OrderOutput,error) {
+	progress := []string{}
+	err := json.Unmarshal([]byte(originData.Process),&progress)
+	if err != nil {
+		clog.Error("unmarsh erro")
+	}
+
+	order := vo.OrderOutput{
+		SystemID: originData.SystemID,
+		CustomerName: originData.CustomerName,
+		FileName: originData.FileName,
+		Department: originData.Department,
+		MakerID: originData.MakerID,
+		Process: progress,
+		CreateTime: originData.CreateTime,
+		DeadlineTime: originData.DeadlineTime,
+		OrderStatus: originData.OrderStatus,
+		AdminStatus: originData.AdminStatus,
+		OriginAmount: originData.OriginAmount,
+		Discount: originData.Discount,
+		Amount: originData.Amount,
+	}
+
+	materialID := []int{}
+	err = json.Unmarshal([]byte(originData.MaterialID),&materialID)
+	if err != nil {
+		return nil,err
+	}
+
+	material := []vo.Material{}
+	for _,v := range materialID {
+		materialData,err := mapper.SelectMaterial(strconv.Itoa(v))
+		if err != nil {
+			return nil,err
+		}
+		m := vo.Material{
+			MaterialID: v,
+			Name: materialData.Name,
+		}
+
+		material = append(material,m)
+	}
+
+	order.Material = material
+
+	return &order,nil
 }

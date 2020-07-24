@@ -1,0 +1,64 @@
+### 登录
+POST http://localhost:9876/api/login
+Content-Type: application/json
+
+{
+  "username": "test2",
+  "password": "test2"
+}
+
+### eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+
+### eff
+GET http://localhost:9876/api/eff/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+
+### 用户列表
+GET http://localhost:9876/api/user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+
+### 单个用户
+GET http://localhost:9876/api/user/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+
+### 添加订单
+POST http://localhost:9876/api/order
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+Content-Type: application/json
+
+{
+  "customer_name": "招商银行",
+  "file_name": "zhaoshang.jpg",
+  "department": "铁皮部",
+  "material_id": [1,2,3],
+  "maker_id": 1,
+  "process": ["铁皮字","打孔字"],
+  "deadline_time": 1595142814,
+  "origin_amount": 100.01,
+  "discount": 0.5
+}
+
+### 订单列表
+GET http://localhost:9876/api/order
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+
+
+### 订单审核
+PATCH http://localhost:9876/api/order/admin
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+Content-Type: application/json
+
+{
+  "system_id" : 3,
+  "admin_status" : 1
+}
+
+### 订单完成
+PATCH http://localhost:9876/api/order/status
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+Content-Type: application/json
+
+{
+  "system_id" : 3,
+  "order_status" : 1
+}
