@@ -62,45 +62,45 @@ func GetOrders(c *gin.Context) {
 	for _, v := range *orderData {
 
 		progress := []string{}
-		err := json.Unmarshal([]byte(v.Process),&progress)
+		err := json.Unmarshal([]byte(v.Process), &progress)
 		if err != nil {
 			clog.Error("unmarsh erro")
 		}
 
 		order := vo.OrderOutput{
-			SystemID: v.SystemID,
+			SystemID:     v.SystemID,
 			CustomerName: v.CustomerName,
-			FileName: v.FileName,
-			Department: v.Department,
-			MakerID: v.MakerID,
-			Process: progress,
-			CreateTime: v.CreateTime,
+			FileName:     v.FileName,
+			Department:   v.Department,
+			MakerID:      v.MakerID,
+			Process:      progress,
+			CreateTime:   v.CreateTime,
 			DeadlineTime: v.DeadlineTime,
-			OrderStatus: v.OrderStatus,
-			AdminStatus: v.AdminStatus,
+			OrderStatus:  v.OrderStatus,
+			AdminStatus:  v.AdminStatus,
 			OriginAmount: v.OriginAmount,
-			Discount: v.Discount,
-			Amount: v.Amount,
+			Discount:     v.Discount,
+			Amount:       v.Amount,
 		}
 
 		materialID := []int{}
-		err = json.Unmarshal([]byte(v.MaterialID),&materialID)
+		err = json.Unmarshal([]byte(v.MaterialID), &materialID)
 		if err != nil {
 			return
 		}
 
 		material := []vo.Material{}
-		for _,v := range materialID {
-			materialData,err := mapper.SelectMaterial(strconv.Itoa(v))
+		for _, v := range materialID {
+			materialData, err := mapper.SelectMaterial(strconv.Itoa(v))
 			if err != nil {
 				return
 			}
 			m := vo.Material{
 				MaterialID: v,
-				Name: materialData.Name,
+				Name:       materialData.Name,
 			}
 
-			material = append(material,m)
+			material = append(material, m)
 		}
 
 		order.Material = material
@@ -130,47 +130,46 @@ func GetOrder(c *gin.Context) {
 		return
 	}
 
-
 	progress := []string{}
-	err = json.Unmarshal([]byte(orderData.Process),&progress)
+	err = json.Unmarshal([]byte(orderData.Process), &progress)
 	if err != nil {
 		clog.Error("unmarsh erro")
 	}
 
 	order := vo.OrderOutput{
-		SystemID: orderData.SystemID,
+		SystemID:     orderData.SystemID,
 		CustomerName: orderData.CustomerName,
-		FileName: orderData.FileName,
-		Department: orderData.Department,
-		MakerID: orderData.MakerID,
-		Process: progress,
-		CreateTime: orderData.CreateTime,
+		FileName:     orderData.FileName,
+		Department:   orderData.Department,
+		MakerID:      orderData.MakerID,
+		Process:      progress,
+		CreateTime:   orderData.CreateTime,
 		DeadlineTime: orderData.DeadlineTime,
-		OrderStatus: orderData.OrderStatus,
-		AdminStatus: orderData.AdminStatus,
+		OrderStatus:  orderData.OrderStatus,
+		AdminStatus:  orderData.AdminStatus,
 		OriginAmount: orderData.OriginAmount,
-		Discount: orderData.Discount,
-		Amount: orderData.Amount,
+		Discount:     orderData.Discount,
+		Amount:       orderData.Amount,
 	}
 
 	materialID := []int{}
-	err = json.Unmarshal([]byte(orderData.MaterialID),&materialID)
+	err = json.Unmarshal([]byte(orderData.MaterialID), &materialID)
 	if err != nil {
 		return
 	}
 
 	material := []vo.Material{}
-	for _,v := range materialID {
-		materialData,err := mapper.SelectMaterial(strconv.Itoa(v))
+	for _, v := range materialID {
+		materialData, err := mapper.SelectMaterial(strconv.Itoa(v))
 		if err != nil {
 			return
 		}
 		m := vo.Material{
 			MaterialID: v,
-			Name: materialData.Name,
+			Name:       materialData.Name,
 		}
 
-		material = append(material,m)
+		material = append(material, m)
 	}
 
 	order.Material = material
@@ -232,7 +231,7 @@ func PatchOrder(c *gin.Context) {
 		return
 	}
 
-	var input model.Orders
+	var input vo.UpdateOrder
 	if err = c.ShouldBindJSON(&input); err != nil {
 		clog.Error(err)
 		return
@@ -240,9 +239,28 @@ func PatchOrder(c *gin.Context) {
 
 	clog.Info("PatchOrder", input)
 
-	rtv, err := mapper.UpdateOrder(input)
+	progress,err := json.Marshal(input.Process)
+	material,err := json.Marshal(input.MaterialID)
+
+	model := model.Orders{
+		SystemID:     input.SystemID,
+		CustomerName: input.CustomerName,
+		FileName:     input.FileName,
+		Department:   input.Department,
+		OrderStatus:  input.OrderStatus,
+		AdminStatus:  input.AdminStatus,
+		DeadlineTime: input.DeadlineTime,
+		Process: string(progress),
+		MakerID:      input.MakerID,
+		MaterialID: string(material),
+		OriginAmount: input.OriginAmount,
+		Discount: input.Discount,
+		Amount: input.Amount,
+	}
+
+	rtv, err := mapper.UpdateOrder(model)
 	if err != nil {
-		clog.Error("PatchUser", err.Error())
+		clog.Error("PatchOrder", err.Error())
 		rest.Error(c, err)
 		return
 	}

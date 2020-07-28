@@ -101,13 +101,24 @@ Content-Type: application/json
 ###
 PATCH http://localhost:9876/api/order
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTU3NDczNjYsImlhdCI6MTU5NTE0MjU2Niwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ZX9t09luZt5v8MsvC6fI4uZR3V5J25KeYlYknQkyXKU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY1NTIwNzUsImlhdCI6MTU5NTk0NzI3NSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ._HPCmEwfPU3CEfEZhVFnJAp_b8nNfrYyuGxPk9lHEtM
 
 {
-  "system_id": 3,
-  "deadline_time":1595142814
+  "system_id": 6,
+  "customer_name": "招商银行6",
+  "file_name": "zs.jpg",
+  "department": "铁皮部",
+  "material_id": [1,4],
+  "maker_id": 1,
+  "process": ["測試"],
+  "create_time": 1593839927,
+  "deadline_time": 1593839927,
+  "order_status": 0,
+  "admin_status": 0,
+  "origin_amount": 100.01,
+  "discount": 0.5,
+  "amount": 50.005
 }
-
 ###
 GET http://49.234.40.111:23334/api/eff/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxMTE2MjksImlhdCI6MTU5NTUwNjgyOSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.OMhCXgmv4n-gDa5rC5JH39bQLkAZQlmKvt3XJk7WF3g
