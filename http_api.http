@@ -36,14 +36,11 @@ Content-Type: application/json
 }
 
 ### 修改用户
-PATCH http://localhost:9876/api/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTQyODgyODUsImlhdCI6MTU5MzY4MzQ4NSwidXNlcm5hbWUiOiJhZG1pbiIsInR5cGUiOjF9.iOa9JrMdWLyVx4o69kWKjYxDDwGN_63VCrYlPugrjag
+PATCH http://localhost:23334/api/user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
 Content-Type: application/json
 
-{
-  "id": 3,
-  "username" :"test3"
-}
+{"username":"test2","password":"test2","type":0,"system_id":4}
 
 ### 删除用户
 DELETE http://localhost:9876/api/user/3

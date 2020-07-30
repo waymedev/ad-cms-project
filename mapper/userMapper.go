@@ -66,18 +66,21 @@ func UpdateUser(i vo.UserInput) (*model.Users, error) {
 		return nil, err
 	}
 
-	//update := model.Users{
-	//	SystemID:   i.SystemId,
-	//	Username:   i.Username,
-	//	Password:   i.Password,
-	//	Type:       i.Type,
-	//	UpdateTime: time.Now().Unix(),
-	//}
-	i.UpdateTime = int(time.Now().Unix())
+	update := make(map[string]interface{})
+	update["password"] = i.Password
+	update["username"] = i.Username
+	update["type"] = i.Type
+	update["update_time"] = int(time.Now().Unix())
 
 	if user != nil {
-		model.DB.Model(&user).Update(i)
+		model.DB.Model(user).Update(update)
 	}
+
+	//if i.Type != nil {
+	//
+	//}
+
+
 
 	return user, nil
 

@@ -20,7 +20,8 @@ func main() {
 	// load config file
 	flag.Parse()
 	// load configuration file./
-	err := global.InitConfig(*configFile)
+	//err := global.InitConfig(*configFile)
+	err := global.InitConfig("./config.toml")
 	if err != nil {
 		fmt.Println("configuration load failed.")
 		os.Exit(1)

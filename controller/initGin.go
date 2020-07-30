@@ -24,6 +24,21 @@ func InitGin(port string) {
 	})
 	r.Use(mwCORS)
 
+
+	//r.GET("/index/*url", func(c *gin.Context) {
+	//	pre, exist := c.Params.Get("url")
+	//	if !exist {
+	//		return
+	//	}
+	//	c.Redirect(http.StatusMovedPermanently, "/index/"+pre)
+	//})
+	//r.GET("/favicon.ico", func(c *gin.Context) {
+	//	c.Redirect(http.StatusMovedPermanently, "/index/favicon.ico")
+	//})
+	//r.GET("/index.html", func(c *gin.Context) {
+	//	c.Redirect(http.StatusMovedPermanently, "/index")
+	//})
+
 	// router
 	api := r.Group("/api")
 	{
@@ -64,12 +79,30 @@ func InitGin(port string) {
 		api.POST("/fund", PostFund)
 
 	}
-
 	if err := r.Run(":" + port); err != nil {
 		return
 	}
 
 }
+
+
+//func loadTemplate() (*template.Template, error) {
+//	t := template.New("")
+//	for name, file := range Assets.Files {
+//		if file.IsDir() || !strings.HasSuffix(name, ".index") {
+//			continue
+//		}
+//		h, err := ioutil.ReadAll(file)
+//		if err != nil {
+//			return nil, err
+//		}
+//		t, err = t.New(name).Parse(string(h))
+//		if err != nil {
+//			return nil, err
+//		}
+//	}
+//	return t, nil
+//}
 
 //func RigesterGin(port string) {
 //
