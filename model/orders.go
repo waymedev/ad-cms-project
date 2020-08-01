@@ -39,7 +39,7 @@ type Orders struct {
 	//[ 3] department                                     text                 null: true   primary: false  isArray: false  auto: false  col: text            len: -1      default: []
 	Department string `gorm:"column:department;type:text;" json:"department"`
 	//[ 4] material_id                                    text                 null: true   primary: false  isArray: false  auto: false  col: text            len: -1      default: []
-	MaterialID string `gorm:"column:material_id;" json:"material_id"`
+	Material string `gorm:"column:material;" json:"material"`
 	//[ 5] maker                                          text                 null: true   primary: false  isArray: false  auto: false  col: text            len: -1      default: []
 	MakerID int `gorm:"column:maker_id;type:text;" json:"maker_id"`
 	//[ 6] process                                        text                 null: true   primary: false  isArray: false  auto: false  col: text            len: -1      default: []

@@ -9,6 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type FundResp struct {
+	Funds []model.Funds
+	Amount float64 `json:"amount"`
+}
+
 // 财务列表
 func GetFunds(c *gin.Context) {
 	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
@@ -18,12 +23,27 @@ func GetFunds(c *gin.Context) {
 		return
 	}
 
-	rtv,err := mapper.SelectFunds()
+	funds,err := mapper.SelectFunds()
 	if err != nil {
 		clog.Error("GetFunds",err)
 		rest.Error(c,"查询失败")
 		return
 	}
+
+	var amount float64
+	for _,v := range *funds {
+		if v.Type == -1 {
+			amount = amount -  v.Amount
+		}else if v.Type == 1 {
+			amount = amount + v.Amount
+		}
+	}
+
+	rtv := FundResp{
+		Funds: *funds,
+		Amount: amount,
+	}
+
 
 	rest.Success(c,rtv)
 }

@@ -35,4 +35,6 @@ type Funds struct {
 	CreateTime int `gorm:"column:create_time;type:integer;" json:"create_time"`
 
 	OrderID int `gorm:"column:order_id;type:integer;" json:"order_id"`
+
+	Type int `gorm:"column:fund_type;type:integer;" json:"fund_type"`
 }

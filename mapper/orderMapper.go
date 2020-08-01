@@ -3,6 +3,7 @@ package mapper
 import (
 	clog "cwm.wiki/ad-CMS/common/log"
 	"cwm.wiki/ad-CMS/model"
+	"errors"
 	"strconv"
 )
 
@@ -92,6 +93,10 @@ func UpdateStatus(u model.Orders) (*model.Orders, error) {
 	if err != nil {
 		clog.Error("UpdateUser", err)
 		return nil, err
+	}
+
+	if order.AdminStatus == 0 {
+		return nil,errors.New("订单未审核")
 	}
 
 	err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("order_status", u.OrderStatus).Error

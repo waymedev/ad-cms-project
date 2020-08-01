@@ -1,10 +1,10 @@
 ### 登录
-POST http://localhost:9876/api/login
+POST http://localhost:23334/api/login
 Content-Type: application/json
 
 {
-  "username": "test2",
-  "password": "test2"
+  "username": "admin",
+  "password": "admin"
 }
 
 ### eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
@@ -22,15 +22,24 @@ GET http://localhost:9876/api/user/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
 
 ### 添加订单
-POST http://localhost:9876/api/order
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+POST http://localhost:23334/api/order
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
 Content-Type: application/json
 
 {
   "customer_name": "招商银行",
   "file_name": "zhaoshang.jpg",
   "department": "铁皮部",
-  "material_id": [1,2,3],
+  "material": [
+    {
+      "material_id": 1,
+      "material_num": 10
+    },
+    {
+      "material_id": 4,
+      "material_num": 10
+    }
+  ],
   "maker_id": 1,
   "process": ["铁皮字","打孔字"],
   "deadline_time": 1595142814,
@@ -40,25 +49,97 @@ Content-Type: application/json
 
 ### 订单列表
 GET http://localhost:23334/api/order
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
 
 
-### 订单审核
-PATCH http://localhost:9876/api/order/admin
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+### 绩效列表
+GET http://localhost:23334/api/eff/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+
+
+### 单个订单列表
+GET http://localhost:23334/api/order/8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+
+
+### 删除订单
+DELETE http://localhost:23334/api/order/8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+
+### 修改订单
+PATCH http://localhost:23334/api/order
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
 Content-Type: application/json
 
 {
-  "system_id" : 3,
+"system_id": 9,
+"customer_name": "招商银行",
+"file_name": "zhaoshang.jpg",
+"department": "铁皮部",
+"material": [
+{
+"material_id": 1,
+"material_num": 10
+},
+{
+"material_id": 4,
+"material_num": 11
+}
+],
+"maker_id": 1,
+"process": [
+"打孔字"
+],
+"deadline_time": 1595142814,
+"order_status": 0,
+"admin_status": 0,
+"origin_amount": 100.01,
+"discount": 0.5,
+"amount": 50.005
+}
+
+
+### 订单审核
+PATCH http://localhost:23334/api/order/admin
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+Content-Type: application/json
+
+{
+  "system_id" : 9,
   "admin_status" : 1
 }
 
 ### 订单完成
-PATCH http://localhost:9876/api/order/status
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTYxOTQ5MjUsImlhdCI6MTU5NTU5MDEyNSwic3lzdGVtSWQiOjQsInVzZXJuYW1lIjoidGVzdDIiLCJ0eXBlIjoxfQ.ElUUIZEean3YcUk2jC1RnkWB6dw7PFluTEZ5KEDaliI
+PATCH http://localhost:23334/api/order/status
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
 Content-Type: application/json
 
 {
-  "system_id" : 3,
+  "system_id" : 9,
   "order_status" : 1
+}
+
+### 财务列表
+GET http://localhost:23334/api/fund
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+
+### 修改财务
+PATCH http://localhost:23334/api/fund
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+Content-Type: application/json
+
+{
+  "system_id" : 6,
+  "fund_type" : -1
+}
+
+### 修改财务
+POST http://localhost:23334/api/fund
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+Content-Type: application/json
+
+{
+  "name": "房租",
+  "fund_type" : -1,
+  "amount": 100
 }

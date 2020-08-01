@@ -12,14 +12,14 @@ func TestInsertOrder(t *testing.T) {
 
 	model.InitGormWithPath("../ad.db")
 
-	materialId, _ := json.Marshal([]int{1, 2, 3, 4})
+	// materialId, _ := json.Marshal([]int{1, 2, 3, 4})
 	process, _ := json.Marshal([]string{"铁皮", "木头"})
 
 	i := model.Orders{
 		CustomerName: "招商银行2",
 		FileName:     "zs.jpg",
 		Department:   "铁皮部",
-		MaterialID:   string(materialId),
+		// MaterialID:   string(materialId),
 		Process:      string(process),
 		MakerID:      1,
 		CreateTime:   int(time.Now().Unix()),
@@ -72,11 +72,11 @@ func TestSelectOrderById(t *testing.T) {
 func TestUpdateOrder(t *testing.T) {
 	model.InitGormWithPath("../ad.db")
 
-	materialId, _ := json.Marshal([]int{1, 2, 3, 4, 5})
+	// materialId, _ := json.Marshal([]int{1, 2, 3, 4, 5})
 
 	i := model.Orders{
 		SystemID:   2,
-		MaterialID: string(materialId),
+		// MaterialID: string(materialId),
 	}
 
 	var order *model.Orders

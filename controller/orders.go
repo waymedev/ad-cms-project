@@ -16,29 +16,30 @@ import (
 	"time"
 )
 
-func formate(input vo.OrderInput) model.Orders {
-	materialId, _ := json.Marshal(input.MaterialID)
-	process, _ := json.Marshal(input.Process)
-
-	m := model.Orders{
-		SystemID:     input.SystemID,
-		CustomerName: input.CustomerName,
-		FileName:     input.FileName,
-		Department:   input.Department,
-		MaterialID:   string(materialId),
-		MakerID:      input.MakerID,
-		Process:      string(process),
-		DeadlineTime: input.DeadlineTime,
-		OriginAmount: input.OriginAmount,
-		Discount:     input.Discount,
-		Amount:       input.OriginAmount * input.Discount,
-		OrderStatus:  input.OrderStatus,
-		AdminStatus:  input.AdminStatus,
-	}
-
-	return m
-}
-
+//
+//func formate(input vo.OrderInput) model.Orders {
+//	materialId, _ := json.Marshal(input.MaterialID)
+//	process, _ := json.Marshal(input.Process)
+//
+//	m := model.Orders{
+//		SystemID:     input.SystemID,
+//		CustomerName: input.CustomerName,
+//		FileName:     input.FileName,
+//		Department:   input.Department,
+//		MaterialID:   string(materialId),
+//		MakerID:      input.MakerID,
+//		Process:      string(process),
+//		DeadlineTime: input.DeadlineTime,
+//		OriginAmount: input.OriginAmount,
+//		Discount:     input.Discount,
+//		Amount:       input.OriginAmount * input.Discount,
+//		OrderStatus:  input.OrderStatus,
+//		AdminStatus:  input.AdminStatus,
+//	}
+//
+//	return m
+//}
+//
 // 获取所有订单
 func GetOrders(c *gin.Context) {
 
@@ -83,27 +84,27 @@ func GetOrders(c *gin.Context) {
 			Amount:       v.Amount,
 		}
 
-		materialID := []int{}
-		err = json.Unmarshal([]byte(v.MaterialID), &materialID)
+		material := []vo.Material{}
+		err = json.Unmarshal([]byte(v.Material), &material)
 		if err != nil {
 			return
 		}
-
-		material := []vo.Material{}
-		for _, v := range materialID {
-			materialData, err := mapper.SelectMaterial(strconv.Itoa(v))
+		rtvMaterial := []vo.Material{}
+		for _, m := range material {
+			materialData, err := mapper.SelectMaterial(strconv.Itoa(m.MaterialID))
 			if err != nil {
 				return
 			}
-			m := vo.Material{
-				MaterialID: v,
+			temp := vo.Material{
+				MaterialID: m.MaterialID,
 				Name:       materialData.Name,
+				Number:     m.Number,
 			}
 
-			material = append(material, m)
+			rtvMaterial = append(rtvMaterial, temp)
 		}
 
-		order.Material = material
+		order.Material = rtvMaterial
 
 		rtv = append(rtv, order)
 	}
@@ -112,6 +113,7 @@ func GetOrders(c *gin.Context) {
 
 }
 
+//
 // 获取单个订单
 func GetOrder(c *gin.Context) {
 
@@ -152,27 +154,27 @@ func GetOrder(c *gin.Context) {
 		Amount:       orderData.Amount,
 	}
 
-	materialID := []int{}
-	err = json.Unmarshal([]byte(orderData.MaterialID), &materialID)
+	material := []vo.Material{}
+	err = json.Unmarshal([]byte(orderData.Material), &material)
 	if err != nil {
 		return
 	}
-
-	material := []vo.Material{}
-	for _, v := range materialID {
-		materialData, err := mapper.SelectMaterial(strconv.Itoa(v))
+	rtvMaterial := []vo.Material{}
+	for _, m := range material {
+		materialData, err := mapper.SelectMaterial(strconv.Itoa(m.MaterialID))
 		if err != nil {
 			return
 		}
-		m := vo.Material{
-			MaterialID: v,
+		temp := vo.Material{
+			MaterialID: m.MaterialID,
 			Name:       materialData.Name,
+			Number:     m.Number,
 		}
 
-		material = append(material, m)
+		rtvMaterial = append(rtvMaterial, temp)
 	}
 
-	order.Material = material
+	order.Material = rtvMaterial
 
 	rest.Success(c, order)
 }
@@ -193,14 +195,14 @@ func PostOrder(c *gin.Context) {
 		return
 	}
 
-	materialId, _ := json.Marshal(input.MaterialID)
+	material, _ := json.Marshal(input.Material)
 	process, _ := json.Marshal(input.Process)
 
 	m := model.Orders{
 		CustomerName: input.CustomerName,
 		FileName:     input.FileName,
 		Department:   input.Department,
-		MaterialID:   string(materialId),
+		Material:     string(material),
 		MakerID:      input.MakerID,
 		Process:      string(process),
 		CreateTime:   int(time.Now().Unix()),
@@ -216,11 +218,10 @@ func PostOrder(c *gin.Context) {
 		return
 	}
 
-	// TODO 与材料联动
-
 	rest.Success(c, true)
 }
 
+//
 // 修改订单 // 审核订单 // 修改订单完成状态
 func PatchOrder(c *gin.Context) {
 	// 检查 token
@@ -239,10 +240,10 @@ func PatchOrder(c *gin.Context) {
 
 	clog.Info("PatchOrder", input)
 
-	progress,err := json.Marshal(input.Process)
-	material,err := json.Marshal(input.MaterialID)
+	progress, err := json.Marshal(input.Process)
+	material, err := json.Marshal(input.Material)
 
-	model := model.Orders{
+	m := model.Orders{
 		SystemID:     input.SystemID,
 		CustomerName: input.CustomerName,
 		FileName:     input.FileName,
@@ -250,15 +251,15 @@ func PatchOrder(c *gin.Context) {
 		OrderStatus:  input.OrderStatus,
 		AdminStatus:  input.AdminStatus,
 		DeadlineTime: input.DeadlineTime,
-		Process: string(progress),
+		Process:      string(progress),
 		MakerID:      input.MakerID,
-		MaterialID: string(material),
+		Material:     string(material),
 		OriginAmount: input.OriginAmount,
-		Discount: input.Discount,
-		Amount: input.Amount,
+		Discount:     input.Discount,
+		Amount:       input.Amount,
 	}
 
-	rtv, err := mapper.UpdateOrder(model)
+	rtv, err := mapper.UpdateOrder(m)
 	if err != nil {
 		clog.Error("PatchOrder", err.Error())
 		rest.Error(c, err)
@@ -268,6 +269,7 @@ func PatchOrder(c *gin.Context) {
 	rest.Success(c, rtv)
 }
 
+//
 // 删除订单
 func DeleteOrder(c *gin.Context) {
 	// 检查 token
@@ -286,6 +288,7 @@ func DeleteOrder(c *gin.Context) {
 
 	rest.Success(c, true)
 }
+
 
 func GetDownloadById(c *gin.Context) {
 
@@ -306,13 +309,13 @@ func GetDownloadById(c *gin.Context) {
 	}
 
 	// 查询使用到的材质
-	byt := []byte(order.MaterialID)
-	var material []int
+	byt := []byte(order.Material)
+	var material []vo.Material
 	// 修改的材料列表
 	_ = json.Unmarshal(byt, &material)
 	var materialName string
 	for k, v := range material {
-		m, err := mapper.SelectMaterial(strconv.Itoa(v))
+		m, err := mapper.SelectMaterial(strconv.Itoa(v.MaterialID))
 		if err != nil {
 			clog.Error("格式化错误")
 			return
@@ -350,7 +353,7 @@ func GetDownloadById(c *gin.Context) {
 		style int
 		data  = map[int][]interface{}{
 			1: {"文件内容"},
-			2: {"单号", "客户名称", "制作人", "文件名", "加工部门", "材质", "制作工艺", "金额", "下单日期", "出货日期"},
+			2: {"单号", "客户名称", "制作人", "订单名称", "加工部门", "材质", "制作工艺", "金额", "下单日期", "出货日期"},
 			3: {
 				order.SystemID,
 				order.CustomerName,
@@ -455,13 +458,13 @@ func MakeFile() *excelize.File {
 		}
 
 		// 查询使用到的材质
-		byt := []byte(order.MaterialID)
-		var material []int
+		byt := []byte(order.Material)
+		var material []vo.Material
 		// 修改的材料列表
 		_ = json.Unmarshal(byt, &material)
 		materialName := ""
 		for k, v := range material {
-			m, err := mapper.SelectMaterial(strconv.Itoa(v))
+			m, err := mapper.SelectMaterial(strconv.Itoa(v.MaterialID))
 			if err != nil {
 				clog.Error("格式化错误")
 				return nil

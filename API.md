@@ -18,6 +18,8 @@
     - [2.3.单个订单](#23单个订单)
     - [2.4.修改订单内容](#24修改订单内容)
     - [2.5.删除订单](#25删除订单)
+    - [2.6.导出单个订单](#26导出单个订单)
+    - [2.7.导出全部订单](#27导出全部订单)
   - [3.材料相关](#3材料相关)
     - [3.1.获取所有材料列表](#31获取所有材料列表)
     - [3.2.获取单个材料](#32获取单个材料)
@@ -173,7 +175,16 @@ header:  Authorization
   "customer_name": "招商银行",
   "file_name": "zhaoshang.jpg",
   "department": "铁皮部",
-  "material_id": [1,4],
+  "material": [
+    {
+      "material_id": 1,
+      "material_num": 10
+    },
+    {
+      "material_id": 4,
+      "material_num": 10
+    }
+  ],
   "maker_id": 1,
   "process": ["铁皮字","打孔字"],
   "deadline_time": 1595142814,
@@ -199,60 +210,33 @@ header:  Authorization
   "code": 0,
   "data": [
     {
-      "system_id": 3,
+      "system_id": 9,
       "customer_name": "招商银行",
-      "file_name": "zs.jpg",
+      "file_name": "zhaoshang.jpg",
       "department": "铁皮部",
       "material": [
         {
           "material_id": 1,
-          "material_name": "铁皮"
+          "material_name": "铁皮",
+          "material_num": 10
         },
         {
           "material_id": 4,
-          "material_name": "钢板"
+          "material_name": "钢板",
+          "material_num": 11
         }
       ],
       "maker_id": 1,
       "process": [
-        "铁皮",
-        "木头"
+        "打孔字"
       ],
-      "create_time": 1593840644,
+      "create_time": 1596278558,
       "deadline_time": 1595142814,
-      "order_status": 0,
-      "admin_status": 0,
-      "origin_amount": 100,
-      "discount": 0,
-      "amount": 0
-    },
-    {
-      "system_id": 4,
-      "customer_name": "招商银行2",
-      "file_name": "zs.jpg",
-      "department": "铁皮部",
-      "material": [
-        {
-          "material_id": 1,
-          "material_name": "铁皮"
-        },
-        {
-          "material_id": 4,
-          "material_name": "钢板"
-        }
-      ],
-      "maker_id": 1,
-      "process": [
-        "铁皮",
-        "木头"
-      ],
-      "create_time": 1593853902,
-      "deadline_time": 1593853902,
-      "order_status": 0,
-      "admin_status": 0,
-      "origin_amount": 100,
-      "discount": 0.8,
-      "amount": 80
+      "order_status": 1,
+      "admin_status": 1,
+      "origin_amount": 100.01,
+      "discount": 0.5,
+      "amount": 50.005
     }
   ]
 }
@@ -265,33 +249,34 @@ header:  Authorization
 {
   "code": 0,
   "data": {
-    "system_id": 3,
-    "customer_name": "招商银行",
-    "file_name": "zs.jpg",
-    "department": "铁皮部",
-    "material": [
-      {
-        "material_id": 1,
-        "material_name": "铁皮"
-      },
-      {
-        "material_id": 4,
-        "material_name": "钢板"
-      }
-    ],
-    "maker_id": 1,
-    "process": [
-      "铁皮",
-      "木头"
-    ],
-    "create_time": 1593840644,
-    "deadline_time": 1595142814,
-    "order_status": 0,
-    "admin_status": 0,
-    "origin_amount": 100,
-    "discount": 0,
-    "amount": 0
-  }
+      "system_id": 9,
+      "customer_name": "招商银行",
+      "file_name": "zhaoshang.jpg",
+      "department": "铁皮部",
+      "material": [
+        {
+          "material_id": 1,
+          "material_name": "铁皮",
+          "material_num": 10
+        },
+        {
+          "material_id": 4,
+          "material_name": "钢板",
+          "material_num": 11
+        }
+      ],
+      "maker_id": 1,
+      "process": [
+        "打孔字"
+      ],
+      "create_time": 1596278558,
+      "deadline_time": 1595142814,
+      "order_status": 1,
+      "admin_status": 1,
+      "origin_amount": 100.01,
+      "discount": 0.5,
+      "amount": 50.005
+    }
 }
 ```
 
@@ -300,17 +285,35 @@ header:  Authorization
 - payload:
 ```json
 {
-  "system_id": 1,
-  "customer_name": "修改后",
-  "file_name": "修改",
-  "department": "modify",
-  "material_id": [2,3,4],
-  "maker_id": 1,
-  "process": ["打孔字"],
-  "deadline_time": 1595142814,
-  "order_status": 1,
-  "admin_status": 1
+      "system_id": 6,
+      "customer_name": "招商银行6",
+      "file_name": "zs.jpg",
+      "department": "铁皮部",
+      "material": [
+        {
+          "material_id": 1,
+          "material_name": "铁皮",
+          "material_num": 20
+        },
+        {
+          "material_id": 4,
+          "material_name": "钢板",
+          "material_num": 20
+        }
+      ],
+      "maker_id": 1,
+      "process": [
+        "測試"
+      ],
+      "create_time": 1593839927,
+      "deadline_time": 1593839927,
+      "order_status": 0,
+      "admin_status": 0,
+      "origin_amount": 100.01,
+      "discount": 0.5,
+      "amount": 50.005
 }
+
 ```
 
 ### 2.5.删除订单
@@ -429,66 +432,36 @@ header:  Authorization
   "code": 0,
   "data": [
     {
-      "system_id": 3,
+      "system_id": 9,
       "customer_name": "招商银行",
-      "file_name": "zs.jpg",
+      "file_name": "zhaoshang.jpg",
       "department": "铁皮部",
       "material": [
         {
           "material_id": 1,
-          "material_name": "铁皮"
+          "material_name": "铁皮",
+          "material_num": 10
         },
         {
           "material_id": 4,
-          "material_name": "钢板"
+          "material_name": "钢板",
+          "material_num": 11
         }
       ],
       "maker_id": 1,
       "process": [
-        "铁皮",
-        "木头"
+        "打孔字"
       ],
-      "create_time": 1593840644,
+      "create_time": 1596278558,
       "deadline_time": 1595142814,
-      "order_status": 0,
-      "admin_status": 0,
-      "origin_amount": 100,
-      "discount": 0,
-      "amount": 0
-    },
-    {
-      "system_id": 4,
-      "customer_name": "招商银行2",
-      "file_name": "zs.jpg",
-      "department": "铁皮部",
-      "material": [
-        {
-          "material_id": 1,
-          "material_name": "铁皮"
-        },
-        {
-          "material_id": 4,
-          "material_name": "钢板"
-        }
-      ],
-      "maker_id": 1,
-      "process": [
-        "铁皮",
-        "木头"
-      ],
-      "create_time": 1593853902,
-      "deadline_time": 1593853902,
-      "order_status": 0,
-      "admin_status": 0,
-      "origin_amount": 100,
-      "discount": 0.8,
-      "amount": 80
+      "order_status": 1,
+      "admin_status": 1,
+      "origin_amount": 100.01,
+      "discount": 0.5,
+      "amount": 50.005
     }
   ]
 }
-
-Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
-
 ```
 
 ### 4.2.订单审核
@@ -504,37 +477,39 @@ Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
 
 - return
 ```json
-
 {
   "code": 0,
-  "data": {
-    "system_id": 3,
-    "customer_name": "招商银行",
-    "file_name": "zs.jpg",
-    "department": "铁皮部",
-    "material": [
-      {
-        "material_id": 1,
-        "material_name": "铁皮"
-      },
-      {
-        "material_id": 4,
-        "material_name": "钢板"
-      }
-    ],
-    "maker_id": 1,
-    "process": [
-      "铁皮",
-      "木头"
-    ],
-    "create_time": 1593840644,
-    "deadline_time": 1595142814,
-    "order_status": 0,
-    "admin_status": 1,
-    "origin_amount": 100,
-    "discount": 0,
-    "amount": 0
-  }
+  "data": [
+    {
+      "system_id": 9,
+      "customer_name": "招商银行",
+      "file_name": "zhaoshang.jpg",
+      "department": "铁皮部",
+      "material": [
+        {
+          "material_id": 1,
+          "material_name": "铁皮",
+          "material_num": 10
+        },
+        {
+          "material_id": 4,
+          "material_name": "钢板",
+          "material_num": 11
+        }
+      ],
+      "maker_id": 1,
+      "process": [
+        "打孔字"
+      ],
+      "create_time": 1596278558,
+      "deadline_time": 1595142814,
+      "order_status": 1,
+      "admin_status": 1,
+      "origin_amount": 100.01,
+      "discount": 0.5,
+      "amount": 50.005
+    }
+  ]
 }
 ```
 
@@ -553,34 +528,37 @@ Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
 ```json
 {
   "code": 0,
-  "data": {
-    "system_id": 3,
-    "customer_name": "招商银行",
-    "file_name": "zs.jpg",
-    "department": "铁皮部",
-    "material": [
-      {
-        "material_id": 1,
-        "material_name": "铁皮"
-      },
-      {
-        "material_id": 4,
-        "material_name": "钢板"
-      }
-    ],
-    "maker_id": 1,
-    "process": [
-      "铁皮",
-      "木头"
-    ],
-    "create_time": 1593840644,
-    "deadline_time": 1595142814,
-    "order_status": 1,
-    "admin_status": 1,
-    "origin_amount": 100,
-    "discount": 0,
-    "amount": 0
-  }
+  "data": [
+    {
+      "system_id": 9,
+      "customer_name": "招商银行",
+      "file_name": "zhaoshang.jpg",
+      "department": "铁皮部",
+      "material": [
+        {
+          "material_id": 1,
+          "material_name": "铁皮",
+          "material_num": 10
+        },
+        {
+          "material_id": 4,
+          "material_name": "钢板",
+          "material_num": 11
+        }
+      ],
+      "maker_id": 1,
+      "process": [
+        "打孔字"
+      ],
+      "create_time": 1596278558,
+      "deadline_time": 1595142814,
+      "order_status": 1,
+      "admin_status": 1,
+      "origin_amount": 100.01,
+      "discount": 0.5,
+      "amount": 50.005
+    }
+  ]
 }
 ```
 
@@ -592,22 +570,19 @@ Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
 ```json
 {
   "code": 0,
-  "data": [
-    {
-      "system_id": 2,
-      "name": "材料进货",
-      "amount": 123.123,
-      "create_time": 1593854094,
-      "order_id": 1
-    },
-    {
-      "system_id": 3,
-      "name": "",
-      "amount": 123.123,
-      "create_time": 1593922598,
-      "order_id": 1
-    }
-  ]
+  "data": {
+    "Funds": [
+      {
+        "system_id": 6,
+        "name": "订单完成",
+        "amount": 50.005,
+        "create_time": 1596281271,
+        "order_id": 9,
+        "fund_type": -1
+      }
+    ],
+    "amount": -50.005
+  }
 }
 ```
 
@@ -618,17 +593,21 @@ Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
 {
   "code": 0,
   "data": {
-    "system_id": 2,
-    "name": "材料进货",
-    "amount": 123.456,
-    "create_time": 1593854094,
-    "order_id": 1
+    "system_id": 6,
+    "name": "订单完成",
+    "amount": 50.005,
+    "create_time": 1596281271,
+    "order_id": 9,
+    "fund_type": -1
   }
 }
 ```
 
 ### 5.3.更新财务
 - PATCH /api/fund
+fund_type 1 收入
+fund_type -1 支出
+
 - payload:
 ```json
 {
@@ -636,7 +615,8 @@ Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
   "name": "材料进货",
   "amount": 123.456,
   "create_time": 1593854094,
-  "order_id": 1
+  "order_id": 1,
+  "fund_type" : -1
 }
 ```
 
@@ -649,7 +629,8 @@ Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
     "name": "材料进货",
     "amount": 123.456,
     "create_time": 1593854094,
-    "order_id": 1
+    "order_id": 1,
+      "fund_type" : -1
   }
 }
 ```
@@ -659,9 +640,9 @@ Response code: 200 (OK); Time: 12ms; Content length: 1391 bytes
 - payload:
 ```json
 {
-  "name": "材料进货",
-  "amount": 123.456,
-  "create_time": 1593854094
+  "name": "房租",
+  "fund_type" : -1,
+  "amount": 100
 }
 ```
 - return:

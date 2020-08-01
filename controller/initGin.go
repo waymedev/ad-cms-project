@@ -55,7 +55,7 @@ func InitGin(port string) {
 		api.DELETE("/order/:id", DeleteOrder)
 		api.POST("/order", PostOrder)
 		api.PATCH("/order", PatchOrder)
-		// 导出
+		//// 导出
 		api.GET("/download",GetAllDownload)
 		api.GET("/download/:id",GetDownloadById)
 

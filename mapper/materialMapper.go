@@ -3,10 +3,10 @@ package mapper
 import (
 	clog "cwm.wiki/ad-CMS/common/log"
 	"cwm.wiki/ad-CMS/model"
+	"cwm.wiki/ad-CMS/model/vo"
 	"github.com/jinzhu/gorm"
 	"strconv"
 )
-
 
 // 添加材料
 func InsertMaterial(m model.Materials) error {
@@ -60,15 +60,14 @@ func DeleteMaterial(id string) error {
 	return err
 }
 
-
 // 自增
-func IncMaterial(ids []int) error {
-	return model.DB.Table("materials").Where("system_id IN (?)", ids).UpdateColumn("count",gorm.Expr("count + ?",1)).Error
+func IncMaterial(m vo.Material) error {
+	return model.DB.Table("materials").Where("system_id IN (?)", m.MaterialID).UpdateColumn("count", gorm.Expr("count + ?", m.Number)).Error
 	//// UPDATE users SET name='hello', age=18 WHERE id IN (10, 11);
 }
 
 // 自减
-func DecMaterial(ids []int) error {
-	return model.DB.Table("materials").Where("system_id IN (?) AND count > 0", ids).UpdateColumn("count",gorm.Expr("count - ?",1)).Error
+func DecMaterial(m vo.Material) error {
+	return model.DB.Table("materials").Where("system_id IN (?) ", m.MaterialID).UpdateColumn("count", gorm.Expr("count - ?", m.Number)).Error
 
 }
