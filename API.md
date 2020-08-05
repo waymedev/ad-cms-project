@@ -310,8 +310,7 @@ header:  Authorization
       "order_status": 0,
       "admin_status": 0,
       "origin_amount": 100.01,
-      "discount": 0.5,
-      "amount": 50.005
+      "discount": 0.5
 }
 
 ```

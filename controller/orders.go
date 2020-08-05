@@ -256,7 +256,7 @@ func PatchOrder(c *gin.Context) {
 		Material:     string(material),
 		OriginAmount: input.OriginAmount,
 		Discount:     input.Discount,
-		Amount:       input.Amount,
+		Amount:       input.OriginAmount * input.Discount,
 	}
 
 	rtv, err := mapper.UpdateOrder(m)

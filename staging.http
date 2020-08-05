@@ -141,3 +141,13 @@ Content-Type: application/json
   "fund_type" : -1,
   "amount": 100
 }
+
+### eff
+PATCH http://localhost:23334/api/order
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcyNDU2OTYsImlhdCI6MTU5NjY0MDg5Niwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.4TgvM1C0Bb2rxn4TbnSYpsWgToqzEAAjQzeSpNskT-M
+Content-Type: application/json
+
+{
+"system_id" :11,
+  "discount":0.8
+}
