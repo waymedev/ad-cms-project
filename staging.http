@@ -56,7 +56,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlh
 
 
 ### 单个订单列表
-GET http://localhost:23334/api/order/8
+GET http://localhost:23334/api/order/9
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
 
 
@@ -95,6 +95,10 @@ Content-Type: application/json
 "discount": 0.5,
 "amount": 50.005
 }
+
+### 删除订单
+DELETE http://localhost:23334/api/order/9
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
 
 
 ### 订单审核

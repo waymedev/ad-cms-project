@@ -75,3 +75,14 @@ Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhd
 ###订单-列表
 GET http://49.234.40.111:23334/api/eff/5
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+
+###订单-列表
+PATCH http://49.234.40.111:23334/api/order
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+Content-Type: application/json
+
+{
+"system_id": 11,
+  "origin_amount":120,
+  "discount": 0.8
+}

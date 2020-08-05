@@ -262,7 +262,7 @@ func PatchOrder(c *gin.Context) {
 	rtv, err := mapper.UpdateOrder(m)
 	if err != nil {
 		clog.Error("PatchOrder", err.Error())
-		rest.Error(c, err)
+		rest.Error(c, err.Error())
 		return
 	}
 
@@ -280,9 +280,22 @@ func DeleteOrder(c *gin.Context) {
 		return
 	}
 
+	order,err := mapper.SelectOrderById(c.Param("id"))
+	if err != nil {
+		clog.Error("",err.Error())
+		rest.Error(c,err.Error())
+		return
+	}
+
+	if order.AdminStatus == 1 {
+		rest.Error(c,"删除失败,订单已审核")
+		return
+	}
+
+
 	if err = mapper.DeleteOrder(c.Param("id")); err != nil {
 		clog.Error("", err)
-		rest.Error(c, "删除失败")
+		rest.Error(c, "删除失败,订单已审核或不存在")
 		return
 	}
 

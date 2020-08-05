@@ -56,6 +56,11 @@ func UpdateOrder(update model.Orders) (*model.Orders, error) {
 		return nil, err
 	}
 
+	if order.AdminStatus == 1 {
+		return nil,errors.New("订单已审核，请联系管理员")
+	}
+
+
 	if order != nil {
 		model.DB.Model(&order).Update(update)
 	}
@@ -65,7 +70,7 @@ func UpdateOrder(update model.Orders) (*model.Orders, error) {
 
 // 删除订单
 func DeleteOrder(id string) error {
-	err := model.DB.Where("system_id = ?", id).Delete(model.Orders{}).Error
+	err := model.DB.Where("system_id = ? AND admin_status = 0", id).Delete(model.Orders{}).Error
 
 	return err
 }
