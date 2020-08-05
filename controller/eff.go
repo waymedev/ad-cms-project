@@ -80,6 +80,7 @@ func GETEffective(c *gin.Context) {
 			m := vo.Material{
 				MaterialID: m.MaterialID,
 				Name: materialData.Name,
+				Number: m.Number,
 			}
 
 			rtvMaterial = append(rtvMaterial,m)

@@ -1,0 +1,77 @@
+### 登录
+POST http://49.234.40.111:23334/api/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+### eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTMyMzIsImlhdCI6MTU5NjU0ODQzMiwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.hbcFRrju2Z-yMXh_Mk9iXDfj83ohFXAQOKrxVoErpl4
+
+### 材料-全部材料
+GET http://49.234.40.111:23334/api/m
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+
+### 材料-获取单个材料
+GET http://49.234.40.111:23334/api/m/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM0MDcsImlhdCI6MTU5NjU0ODYwNywic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ._2uVEL1u454seajk2WEPy3Sa_hQJn_MjFnNlq4wgiYQ
+
+### 材料-修改单个材料
+PATCH http://49.234.40.111:23334/api/m
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM0MDcsImlhdCI6MTU5NjU0ODYwNywic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ._2uVEL1u454seajk2WEPy3Sa_hQJn_MjFnNlq4wgiYQ
+Content-Type: application/json
+
+{
+  "system_id": 1,
+  "name": "铁皮-修改版本"
+}
+
+### 材料-添加单个材料
+POST http://49.234.40.111:23334/api/m
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+Content-Type: application/json
+
+{
+  "name": "测试材料",
+  "count": 1
+}
+
+###订单-添加订单
+POST http://49.234.40.111:23334/api/order
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+Content-Type: application/json
+
+{
+  "customer_name": "招商银行",
+  "file_name": "zhaoshang.jpg",
+  "department": "铁皮部",
+  "material": [
+    {
+      "material_id": 1,
+      "material_num": 10
+    },
+    {
+      "material_id": 6,
+      "material_num": 10
+    }
+  ],
+  "maker_id": 1,
+  "process": ["铁皮字","打孔字"],
+  "deadline_time": 1595142814,
+  "origin_amount": 100.01,
+  "discount": 0.5
+}
+
+###订单-列表
+GET http://49.234.40.111:23334/api/order
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+
+###订单-列表
+GET http://49.234.40.111:23334/api/order/14
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+
+
+###订单-列表
+GET http://49.234.40.111:23334/api/eff/5
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
