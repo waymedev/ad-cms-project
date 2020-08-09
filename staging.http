@@ -112,7 +112,7 @@ Content-Type: application/json
 
 ### 财务列表
 GET http://localhost:23334/api/fund
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTY4NzY5OTEsImlhdCI6MTU5NjI3MjE5MSwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.yNUUVD2LTWLGDctf71yCQf2hnqxVirSfInsSbbvI2-U
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0
 
 ### 修改财务
 PATCH http://localhost:23334/api/fund

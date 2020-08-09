@@ -6,13 +6,17 @@ import (
 	"cwm.wiki/ad-CMS/common/rest"
 	"cwm.wiki/ad-CMS/mapper"
 	"cwm.wiki/ad-CMS/model"
+	"cwm.wiki/ad-CMS/model/vo"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 type FundResp struct {
 	Funds []model.Funds
 	Amount float64 `json:"amount"`
 }
+
+
 
 // 财务列表
 func GetFunds(c *gin.Context) {
@@ -23,7 +27,17 @@ func GetFunds(c *gin.Context) {
 		return
 	}
 
-	funds,err := mapper.SelectFunds()
+	var searchFund vo.SearchFund
+	start := c.Query("start")
+	if start != "" {
+		searchFund.Start,_ = strconv.Atoi(start)
+	}
+	end := c.Query("end")
+	if end != "" {
+		searchFund.End,_ = strconv.Atoi(end)
+	}
+
+	funds,err := mapper.SelectFundsByFileter(searchFund)
 	if err != nil {
 		clog.Error("GetFunds",err)
 		rest.Error(c,"查询失败")
