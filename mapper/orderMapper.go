@@ -3,7 +3,6 @@ package mapper
 import (
 	clog "cwm.wiki/ad-CMS/common/log"
 	"cwm.wiki/ad-CMS/model"
-	"errors"
 	"strconv"
 )
 
@@ -56,9 +55,9 @@ func UpdateOrder(update model.Orders) (*model.Orders, error) {
 		return nil, err
 	}
 
-	if order.AdminStatus == 1 {
-		return nil,errors.New("订单已审核，请联系管理员")
-	}
+	//if order.AdminStatus == 1 {
+	//	return nil,errors.New("订单已审核，请联系管理员")
+	//}
 
 
 	if order != nil {
@@ -70,7 +69,7 @@ func UpdateOrder(update model.Orders) (*model.Orders, error) {
 
 // 删除订单
 func DeleteOrder(id string) error {
-	err := model.DB.Where("system_id = ? AND admin_status = 0", id).Delete(model.Orders{}).Error
+	err := model.DB.Where("system_id = ? ", id).Delete(model.Orders{}).Error
 
 	return err
 }
@@ -85,7 +84,7 @@ func UpdateAdmin(u model.Orders) (*model.Orders, error) {
 		return nil, err
 	}
 
-	err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("admin_status", u.AdminStatus).Error
+	//err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("admin_status", u.AdminStatus).Error
 
 	return order,err
 }
@@ -100,9 +99,9 @@ func UpdateStatus(u model.Orders) (*model.Orders, error) {
 		return nil, err
 	}
 
-	if order.AdminStatus == 0 {
-		return nil,errors.New("订单未审核")
-	}
+	//if order.AdminStatus == 0 {
+	//	return nil,errors.New("订单未审核")
+	//}
 
 	err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("order_status", u.OrderStatus).Error
 

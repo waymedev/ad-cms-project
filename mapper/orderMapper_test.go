@@ -5,35 +5,11 @@ import (
 	"cwm.wiki/ad-CMS/model"
 	"encoding/json"
 	"testing"
-	"time"
 )
 
 func TestInsertOrder(t *testing.T) {
 
-	model.InitGormWithPath("../ad.db")
 
-	// materialId, _ := json.Marshal([]int{1, 2, 3, 4})
-	process, _ := json.Marshal([]string{"铁皮", "木头"})
-
-	i := model.Orders{
-		CustomerName: "招商银行2",
-		FileName:     "zs.jpg",
-		Department:   "铁皮部",
-		// MaterialID:   string(materialId),
-		Process:      string(process),
-		MakerID:      1,
-		CreateTime:   int(time.Now().Unix()),
-		DeadlineTime: int(time.Now().Unix()),
-		OrderStatus:  0,
-		AdminStatus:  0,
-		OriginAmount: 100,
-		Discount: 0.8,
-		Amount: 100*0.8,
-	}
-
-	if err := InsertOrder(i); err != nil {
-		t.Fatal(err)
-	}
 
 }
 

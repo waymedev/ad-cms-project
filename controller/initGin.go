@@ -55,9 +55,9 @@ func InitGin(port string) {
 		api.DELETE("/order/:id", DeleteOrder)
 		api.POST("/order", PostOrder)
 		api.PATCH("/order", PatchOrder)
-		//// 导出
-		api.GET("/download",GetAllDownload)
-		api.GET("/download/:id",GetDownloadById)
+		////// 导出
+		//api.GET("/download",GetAllDownload)
+		//api.GET("/download/:id",GetDownloadById)
 
 		// 材料管理
 		api.GET("/m", GetMaterials)
@@ -67,9 +67,9 @@ func InitGin(port string) {
 		api.DELETE("/m/:id", DeleteMaterial)
 
 		// 绩效管理
-		api.GET("/eff/:id", GETEffective)
-		api.PATCH("/order/admin", PatchAdmin)
-		api.PATCH("/order/status", PatchStatus)
+		//api.GET("/eff/:id", GETEffective)
+		//api.PATCH("/order/admin", PatchAdmin)
+		//api.PATCH("/order/status", PatchStatus)
 
 		// 资金管理
 		api.GET("/fund", GetFunds)
