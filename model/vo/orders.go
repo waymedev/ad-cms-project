@@ -24,7 +24,7 @@ type OrderOutput struct {
 	File         []File   `json:"file"`
 	Department   []string `json:"department"`
 	Maker        string   `json:"maker"`
-	Progress      string   `json:"progress"`
+	Progress     string   `json:"progress"`
 	CreateTime   int      `json:"create_time"`
 	DeadlineTime int      `json:"deadline_time"`
 	OrderStatus  int      `json:"order_status"`
@@ -52,7 +52,7 @@ type UpdateOrder struct {
 	CustomerName string   `json:"customer_name"`
 	File         []File   `json:"file"`
 	Department   []string `json:"department"`
-	Progress      string   `json:"progress"`
+	Progress     string   `json:"progress"`
 	DeadlineTime int      `json:"deadline_time"`
 	OrderStatus  int      `json:"order_status"`
 	Area         float64  `json:"area"`
@@ -61,4 +61,10 @@ type UpdateOrder struct {
 	After        string   `json:"after"`
 	Note         string   `json:"note"`
 	Amount       float64  `json:"amount"`
+}
+
+type SearchOrder struct {
+	Name  string `json:"name"`
+	Start int    `json:"start"`
+	End   int    `json:"end"`
 }

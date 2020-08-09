@@ -63,7 +63,7 @@ Content-Type: application/json
 }
 
 ### 删除订单
-DELETE http://localhost:23334/api/order/13
+DELETE http://localhost:23334/api/order/16
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0
 
 
@@ -100,6 +100,14 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlh
 GET http://localhost:23334/api/order/13
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0
 
+### search
+POST http://localhost:23334/api/order/search
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0
+Content-Type: application/json
+
+{
+"name": "招商"
+}
 
 
 ### 财务列表
@@ -128,11 +136,15 @@ Content-Type: application/json
 }
 
 ### eff
-PATCH http://localhost:23334/api/order
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcyNDU2OTYsImlhdCI6MTU5NjY0MDg5Niwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.4TgvM1C0Bb2rxn4TbnSYpsWgToqzEAAjQzeSpNskT-M
+GET http://localhost:23334/api/eff/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0
+
+### eff
+PATCH http://localhost:23334/api/order/status
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0
 Content-Type: application/json
 
 {
-"system_id" :11,
-  "discount":0.8
+  "system_id" : 16,
+  "order_status" : 1
 }

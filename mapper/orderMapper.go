@@ -3,6 +3,7 @@ package mapper
 import (
 	clog "cwm.wiki/ad-CMS/common/log"
 	"cwm.wiki/ad-CMS/model"
+	"cwm.wiki/ad-CMS/model/vo"
 	"strconv"
 )
 
@@ -24,14 +25,37 @@ func SelectOrders() (*[]model.Orders, error) {
 	return &orders, nil
 }
 
-func SelectOrderByMakerId(id string) (*[]model.Orders,error) {
+func SelectOrderByFilter(s vo.SearchOrder) (*[]model.Orders, error) {
+
 	var orders []model.Orders
-	if err := model.DB.Where("maker_id = ?", id).Find(&orders).Error; err != nil {
-		clog.Error("SelectOrderByMakerId",err)
-		return nil,err
+	var db = model.DB
+	if s.Name != "" {
+		db = db.Where("customer_name like ?", "%"+s.Name+"%")
+	}
+	if s.Start != 0 {
+		db = db.Where("create_time >= ?", s.Start)
+	}
+	if s.End != 0 {
+		db = db.Where("create_time <= ?", s.End)
 	}
 
-	return &orders,nil
+	if err := db.Find(&orders).Error; err != nil {
+		clog.Error("SelectOrderByFilter", err)
+		return nil, err
+	}
+
+	return &orders, nil
+
+}
+
+func SelectOrderByMakerId(id string) (*[]model.Orders, error) {
+	var orders []model.Orders
+	if err := model.DB.Where("maker_id = ?", id).Find(&orders).Error; err != nil {
+		clog.Error("SelectOrderByMakerId", err)
+		return nil, err
+	}
+
+	return &orders, nil
 
 }
 
@@ -59,7 +83,6 @@ func UpdateOrder(update model.Orders) (*model.Orders, error) {
 	//	return nil,errors.New("订单已审核，请联系管理员")
 	//}
 
-
 	if order != nil {
 		model.DB.Model(&order).Update(update)
 	}
@@ -86,7 +109,7 @@ func UpdateAdmin(u model.Orders) (*model.Orders, error) {
 
 	//err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("admin_status", u.AdminStatus).Error
 
-	return order,err
+	return order, err
 }
 
 // 更新完成状态
@@ -105,5 +128,5 @@ func UpdateStatus(u model.Orders) (*model.Orders, error) {
 
 	err = model.DB.Model(&order).Where("system_id = ?", u.SystemID).Update("order_status", u.OrderStatus).Error
 
-	return order,err
+	return order, err
 }

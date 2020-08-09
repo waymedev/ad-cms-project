@@ -1,97 +1,88 @@
 package controller
-//
-//import (
-//	"cwm.wiki/ad-CMS/common/jwt"
-//	clog "cwm.wiki/ad-CMS/common/log"
-//	"cwm.wiki/ad-CMS/common/rest"
-//	"cwm.wiki/ad-CMS/mapper"
-//	"cwm.wiki/ad-CMS/model"
-//	"cwm.wiki/ad-CMS/model/vo"
-//	"encoding/json"
-//	"fmt"
-//	"github.com/gin-gonic/gin"
-//	"strconv"
-//	"time"
-//)
+
+import (
+	"cwm.wiki/ad-CMS/common/jwt"
+	clog "cwm.wiki/ad-CMS/common/log"
+	"cwm.wiki/ad-CMS/common/rest"
+	"cwm.wiki/ad-CMS/mapper"
+	"cwm.wiki/ad-CMS/model"
+	"cwm.wiki/ad-CMS/model/vo"
+	"encoding/json"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"strconv"
+	"time"
+)
+
 //
 //type adminInput struct {
 //	SystemId int `json:"system_id"`
 //	AdminStatus int `json:"admin_status"`
 //}
 //
-//type statusInput struct {
-//	SystemId int `json:"system_id"`
-//	OrderStatus int `json:"order_status"`
-//}
+type statusInput struct {
+	SystemId int `json:"system_id"`
+	OrderStatus int `json:"order_status"`
+}
 //
-//func GETEffective(c *gin.Context) {
-//
-//	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
-//	if err != nil {
-//		clog.Error("GETEffective", err)
-//		rest.Error(c, "请重新登录")
-//		return
-//	}
-//
-//	// 根据制作人查询订单
-//	orderData, err := mapper.SelectOrderByMakerId(c.Param("id"))
-//	if err != nil {
-//		clog.Error("GETEffective",err)
-//		rest.Error(c,"查找失败")
-//		return
-//	}
-//	var rtv []vo.OrderOutput
-//	for _, v := range *orderData {
-//
-//		var progress []string
-//		err := json.Unmarshal([]byte(v.Process),&progress)
-//		if err != nil {
-//			clog.Error("unmarsh erro")
-//		}
-//
-//		order := vo.OrderOutput{
-//			SystemID: v.SystemID,
-//			CustomerName: v.CustomerName,
-//			FileName: v.FileName,
-//			Department: v.Department,
-//			MakerID: v.MakerID,
-//			Process: progress,
-//			CreateTime: v.CreateTime,
-//			DeadlineTime: v.DeadlineTime,
-//			OrderStatus: v.OrderStatus,
-//			AdminStatus: v.AdminStatus,
-//			OriginAmount: v.OriginAmount,
-//			Discount: v.Discount,
-//			Amount: v.Amount,
-//		}
-//
-//		var material []vo.Material
-//		err = json.Unmarshal([]byte(v.Material),&material)
-//		if err != nil {
-//			return
-//		}
-//
-//		var rtvMaterial []vo.Material
-//		for _,m := range material {
-//			materialData,err := mapper.SelectMaterial(strconv.Itoa(m.MaterialID))
-//			if err != nil {
-//				return
-//			}
-//			m := vo.Material{
-//				MaterialID: m.MaterialID,
-//				Name: materialData.Name,
-//				Number: m.Number,
-//			}
-//
-//			rtvMaterial = append(rtvMaterial,m)
-//		}
-//
-//		order.Material = rtvMaterial
-//
-//		rtv = append(rtv, order)
-//	}
-//	rest.Success(c,rtv)
-//}
+func GETEffective(c *gin.Context) {
+
+	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
+	if err != nil {
+		clog.Error("GETEffective", err)
+		rest.Error(c, "请重新登录")
+		return
+	}
+
+	// 根据制作人查询订单
+	orderData, err := mapper.SelectOrderByMakerId(c.Param("id"))
+	if err != nil {
+		clog.Error("GETEffective",err)
+		rest.Error(c,"查找失败")
+		return
+	}
+	var rtv []vo.OrderOutput
+	for _, v := range *orderData {
+
+		var file []vo.File
+		var department []string
+		err := json.Unmarshal([]byte(v.File), &file)
+		if err != nil {
+			clog.Error("unmarsh erro")
+		}
+
+		err = json.Unmarshal([]byte(v.Department), &department)
+		if err != nil {
+			clog.Error("unmarsh erro")
+		}
+
+		user, err := mapper.SelectUser(strconv.Itoa(v.MakerID))
+		if err != nil {
+			clog.Error("用户不存在")
+			return
+		}
+
+		order := vo.OrderOutput{
+			SystemID:     v.SystemID,
+			CustomerName: v.CustomerName,
+			File:         file,
+			Department:   department,
+			Maker:        user.Username,
+			Progress:      v.Progress,
+			CreateTime:   v.CreateTime,
+			DeadlineTime: v.DeadlineTime,
+			OrderStatus:  v.OrderStatus,
+			Area:         v.Area,
+			Price:        v.Price,
+			Sum:          v.Sum,
+			After:        v.After,
+			Note:         v.Note,
+			Amount:       v.Amount,
+		}
+		rtv = append(rtv, order)
+	}
+	rest.Success(c,rtv)
+}
 //
 //// 检查订单是否审核 这里需要联动材料
 //func PatchAdmin(c *gin.Context) {
@@ -213,72 +204,67 @@ package controller
 //
 //}
 //
-//func PatchStatus(c *gin.Context) {
-//	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
-//	if err != nil {
-//		clog.Error("PatchFund", err)
-//		rest.Error(c, "请重新登录")
-//		return
-//	}
-//
-//	var input statusInput
-//	if err = c.ShouldBindJSON(&input); err != nil {
-//		clog.Error(err)
-//		return
-//	}
-//
-//	u := model.Orders{
-//		SystemID: input.SystemId,
-//		OrderStatus: input.OrderStatus,
-//	}
-//
-//	originOrder, err := mapper.UpdateStatus(u)
-//	if err != nil {
-//		clog.Error("PatchStatus",err)
-//		message := fmt.Sprintf("%s %s", err, "修改失败")
-//		rest.Error(c,message)
-//		return
-//	}
-//
-//	// 联动资金记录
-//	if originOrder != nil && originOrder.OrderStatus == 0 {
-//		fund,err := mapper.SelectFundByOrderID(strconv.Itoa(originOrder.SystemID))
-//		if err != nil {
-//			clog.Error("PatchStatus SelectFundByOrderID",err)
-//			return
-//		}
-//
-//		err = mapper.DeleteFund(strconv.Itoa(fund.SystemID))
-//		if err != nil {
-//			clog.Error("PatchStatus DeleteFund",err)
-//			return
-//		}
-//	} else if originOrder != nil && originOrder.OrderStatus == 1 {
-//		i := model.Funds{
-//			Name: "订单完成",
-//			CreateTime: int(time.Now().Unix()),
-//			Amount: originOrder.Amount,
-//			OrderID: originOrder.SystemID,
-//		}
-//
-//		err = mapper.InsertFund(i)
-//		if err != nil {
-//			clog.Error("PatchStatus InsertFund",err)
-//			return
-//		}
-//	}
-//
-//
-//	rtv,err := FormatOneData(originOrder)
-//	if err != nil {
-//		return
-//	}
-//
-//	rest.Success(c,rtv)
-//
-//
-//
-//}
+func PatchStatus(c *gin.Context) {
+	_, err := jwt.ParseUser(c.GetHeader("Authorization"))
+	if err != nil {
+		clog.Error("PatchFund", err)
+		rest.Error(c, "请重新登录")
+		return
+	}
+
+	var input statusInput
+	if err = c.ShouldBindJSON(&input); err != nil {
+		clog.Error(err)
+		return
+	}
+
+	u := model.Orders{
+		SystemID: input.SystemId,
+		OrderStatus: input.OrderStatus,
+	}
+
+
+	originOrder, err := mapper.UpdateStatus(u)
+	if err != nil {
+		clog.Error("PatchStatus",err)
+		message := fmt.Sprintf("%s %s", err, "修改失败")
+		rest.Error(c,message)
+		return
+	}
+
+	// 联动资金记录
+	if originOrder != nil && originOrder.OrderStatus == 0 {
+		fund,err := mapper.SelectFundByOrderID(strconv.Itoa(originOrder.SystemID))
+		if err != nil {
+			clog.Error("PatchStatus SelectFundByOrderID",err)
+			return
+		}
+
+		err = mapper.DeleteFund(strconv.Itoa(fund.SystemID))
+		if err != nil {
+			clog.Error("PatchStatus DeleteFund",err)
+			return
+		}
+	} else if originOrder != nil && originOrder.OrderStatus == 1 {
+		i := model.Funds{
+			Name: "订单完成",
+			CreateTime: int(time.Now().Unix()),
+			Amount: originOrder.Amount,
+			OrderID: originOrder.SystemID,
+		}
+
+		err = mapper.InsertFund(i)
+		if err != nil {
+			clog.Error("PatchStatus InsertFund",err)
+			return
+		}
+	}
+
+	rest.Success(c,originOrder)
+
+
+
+}
 //
 //func FormatOneData( originData *model.Orders ) (*vo.OrderOutput,error) {
 //	progress := []string{}
