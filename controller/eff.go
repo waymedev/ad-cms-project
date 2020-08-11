@@ -251,6 +251,7 @@ func PatchStatus(c *gin.Context) {
 			CreateTime: int(time.Now().Unix()),
 			Amount: originOrder.Amount,
 			OrderID: originOrder.SystemID,
+			Type: 1,
 		}
 
 		err = mapper.InsertFund(i)

@@ -67,3 +67,13 @@ Content-Type: application/json
 {
 "system_id": 13
 }
+
+
+###
+GET http://49.234.40.111:23334/api/eff/1
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+
+
+###
+GET http://49.234.40.111:23334/api/fund
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ

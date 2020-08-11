@@ -14,6 +14,8 @@ import (
 type FundResp struct {
 	Funds []model.Funds
 	Amount float64 `json:"amount"`
+	Income float64	`json:"income"`
+	Expand float64 `json:"expand"`
 }
 
 
@@ -45,17 +47,24 @@ func GetFunds(c *gin.Context) {
 	}
 
 	var amount float64
+	var income float64
+	var expend float64
 	for _,v := range *funds {
+		// 支出
 		if v.Type == -1 {
 			amount = amount -  v.Amount
+			expend = expend - v.Amount
 		}else if v.Type == 1 {
 			amount = amount + v.Amount
+			income = income + v.Amount
 		}
 	}
 
 	rtv := FundResp{
 		Funds: *funds,
 		Amount: amount,
+		Income: income,
+		Expand: expend,
 	}
 
 

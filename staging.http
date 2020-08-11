@@ -136,7 +136,7 @@ Content-Type: application/json
 }
 
 ### eff
-GET http://localhost:23334/api/eff/1
+DELETE http://localhost:23334/api/fund/6
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0
 
 ### eff
@@ -145,6 +145,9 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlh
 Content-Type: application/json
 
 {
-  "system_id" : 16,
+  "system_id" : 15,
   "order_status" : 1
 }
+
+###
+POST http://localhost:23334/
