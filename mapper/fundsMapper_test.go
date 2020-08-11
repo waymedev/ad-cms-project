@@ -2,6 +2,7 @@ package mapper
 
 import (
 	"cwm.wiki/ad-CMS/model"
+	"cwm.wiki/ad-CMS/model/vo"
 	"testing"
 	"time"
 )
@@ -80,4 +81,16 @@ func TestTime(t *testing.T) {
 
 	time,_ := time.Parse("2006-01-02", "2019-01-02")
 	t.Log(time.Unix())
+}
+
+func TestSelectFundsByFileter(t *testing.T) {
+	model.InitGormWithPath("../ad.db")
+
+	search := vo.SearchFund{
+		Start:1596988800,
+		End:1597161600,
+	}
+	funds,_ := SelectFundsByFileter(search)
+	t.Log(funds)
+
 }

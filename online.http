@@ -77,3 +77,17 @@ Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhd
 ###
 GET http://49.234.40.111:23334/api/fund
 Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+
+###
+DELETE http://49.234.40.111:23334/api/fund/15
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+
+###
+PATCH http://49.234.40.111:23334/api/order/status
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTcxNTM2MzAsImlhdCI6MTU5NjU0ODgzMCwic3lzdGVtSWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJ0eXBlIjoxfQ.ltbvvSv1wq8NV8d4krxk7eEX7rAAGnaFGoTaQx9ooYQ
+Content-Type: application/json
+
+{
+"system_id": 21,
+  "order_status": 1
+}

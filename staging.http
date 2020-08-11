@@ -151,3 +151,7 @@ Content-Type: application/json
 
 ###
 POST http://localhost:23334/
+
+###
+GET http://localhost:23334/api/fund?start=1596988800&end1597161600
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTc1NDUwMjMsImlhdCI6MTU5Njk0MDIyMywic3lzdGVtSWQiOjUsInVzZXJuYW1lIjoiY3dtIiwidHlwZSI6MX0.8FnNxKNJGHIJ-M6SJDRLatzciI2Nm12awQ9a4i2fHL0

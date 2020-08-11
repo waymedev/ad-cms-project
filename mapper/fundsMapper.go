@@ -33,11 +33,11 @@ func SelectFundsByFileter(search vo.SearchFund) (*[]model.Funds, error) {
 
 	var funds []model.Funds
 	var db = model.DB
-	if search.Start != 0 {
-		db.Where("create_time >= ?", search.Start)
+	if search.Start > 0 {
+		db = db.Where("create_time >= ?", search.Start)
 	}
-	if search.End != 0 {
-		db.Where("create_time <= ?", search.End)
+	if search.End > 0 {
+		db = db.Where("create_time <= ?", search.End)
 	}
 
 	if err := db.Find(&funds).Error; err != nil {

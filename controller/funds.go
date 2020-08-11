@@ -39,6 +39,7 @@ func GetFunds(c *gin.Context) {
 		searchFund.End,_ = strconv.Atoi(end)
 	}
 
+
 	funds,err := mapper.SelectFundsByFileter(searchFund)
 	if err != nil {
 		clog.Error("GetFunds",err)
