@@ -31,7 +31,7 @@ func LoginController(c *gin.Context) {
 		Type:     user.Type,
 	}
 
-	token, err := jwt.GenerateToken(&userInfo, time.Hour*24*7)
+	token, err := jwt.GenerateToken(&userInfo, time.Hour*2)
 
 	if err != nil {
 		rest.Error(c, err)
