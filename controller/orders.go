@@ -567,6 +567,14 @@ func GetAllDownload(c *gin.Context) {
 			clog.Error("unmarsh erro")
 		}
 
+		if len(file) == 0 {
+			file = append(file,vo.File{
+				FileName: "",
+				MaterialName: "",
+			})
+		}
+
+
 		departmentName := ""
 		err = json.Unmarshal([]byte(v.Department), &department)
 		if err != nil {
